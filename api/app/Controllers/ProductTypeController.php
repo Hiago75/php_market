@@ -17,8 +17,4 @@ class ProductTypeController
         return $this->productTypeService->getAllProductTypes();
     }
 
-    public function show($id)
-    {
-        return $this->productTypeService->getProductTypeById($id);;
-    }
 }
