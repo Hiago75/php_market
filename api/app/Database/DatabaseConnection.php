@@ -5,15 +5,17 @@ namespace App\Database;
 class DatabaseConnection
 {
     private $pdo;
+    private string $dbName;
 
-    public function __construct() 
+    public function __construct(string $dbName)
     {
-        $this->connect();
+        $this->dbName = $dbName;
+        $this->connect($dbName);
     }
 
     public function connect()
     {
-        $dsn = "pgsql:host=".DB_HOST.";port=".DB_PORT.";dbname=".DB_NAME;
+        $dsn = "pgsql:host=".DB_HOST.";port=".DB_PORT.";dbname=". $this->dbName;
         
         try {
             $this->pdo = new \PDO($dsn, DB_USER, DB_PASS);
