@@ -9,7 +9,7 @@ class DatabaseConnectionTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->dbConnection = new DatabaseConnection(TEST_DB_NAME);
+        $this->dbConnection = new DatabaseConnection(DB_NAME);
     }
 
     public function testConnect()
