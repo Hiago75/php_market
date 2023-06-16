@@ -1,22 +1,35 @@
 <?php
-use PHPUnit\Framework\TestCase;
+
 use App\Services\ProductTypeService;
+use PHPUnit\Framework\TestCase;
 
 class ProductTypeServiceTest extends TestCase
 {
+    private $productTypeModelMock;
+    private $productTypeService;
+
+    protected function setUp(): void
+    {
+        $this->productTypeModelMock = $this->createMock(\App\Models\ProductType::class);
+        $this->productTypeService = new ProductTypeService($this->productTypeModelMock);
+    }
+
+    protected function tearDown(): void
+    {
+        $this->productTypeModelMock = null;
+        $this->productTypeService = null;
+    }
+
     public function testGetAllProductTypes()
     {
-        $productTypeService = new ProductTypeService();
-        $result = $productTypeService->getAllProductTypes();
+        $expectedResult = ['Type 1', 'Type 2', 'Type 3'];
+        $this->productTypeModelMock->expects($this->once())
+            ->method('getAllProductTypes')
+            ->willReturn($expectedResult);
 
-        $this->assertEquals('It worked', $result);
-    }
+        $result = $this->productTypeService->getAllProductTypes();
 
-    public function testGetProductTypeById()
-    {
-        $productTypeService = new ProductTypeService();
-        $result = $productTypeService->getProductTypeById(123);
-
-        $this->assertEquals('It worked + 123', $result);
+        $this->assertEquals($expectedResult, $result);
     }
 }
+

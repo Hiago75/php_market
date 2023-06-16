@@ -4,6 +4,8 @@ namespace App;
 
 require_once '../vendor/autoload.php';
 
+use App\Database\DatabaseConnection;
+
 $requestUrl = $_SERVER['REQUEST_URI'];
 
 $baseUrl = str_replace('/public', '', $_SERVER['SCRIPT_NAME']);
@@ -27,6 +29,7 @@ $serviceName = $formatedParameter . 'Service';
 
 $controllerClass = 'App\\Controllers\\' . $controllerName;
 $serviceClass = 'App\\Services\\' . $serviceName;
+$modelClass = 'App\\Models\\' . $formatedParameter;
 
 if (!class_exists($controllerClass) || !class_exists($serviceClass)) {
     header('HTTP/1.1 404 Not Found');
@@ -35,7 +38,9 @@ if (!class_exists($controllerClass) || !class_exists($serviceClass)) {
     die();
 }
 
-$service = new $serviceClass();
+$database = new DatabaseConnection(DB_NAME);
+$model = new $modelClass($database);
+$service = new $serviceClass($model);
 $controller = new $controllerClass($service);
 
 $httpMethod = $_SERVER['REQUEST_METHOD'];
@@ -45,7 +50,7 @@ if (method_exists($controller, $methodName)) {
     $response = $controller->$methodName();
     http_response_code(200);
 
-    echo json_encode(['data' => $response]);
+    echo json_encode(['data' => $response], JSON_UNESCAPED_UNICODE);
 } else {
     http_response_code(405);
     

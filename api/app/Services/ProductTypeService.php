@@ -5,13 +5,14 @@ use App\Models\ProductType;
 
 class ProductTypeService
 {
-    public function getAllProductTypes()
-    {
-        return 'It worked';
-    }
+  private $productType;
 
-    public function getProductTypeById($id)
-    {
-      return 'It worked + ' . $id;
-    }
+  public function __construct($model) {
+    $this->productType = $model;
+  }
+
+  public function getAllProductTypes()
+  {
+      return $this->productType->getAllProductTypes();
+  }
 }
