@@ -4,12 +4,13 @@ services:
     image: postgres:14.1-alpine
     restart: always
     environment:
+      - PGDATA=/var/lib/postgresql/data/market
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=secrect
     ports:
       - "5432:5432"
     volumes:
-      - db:/var/lib/postgresql/data
+      - ./data/sql/init.sql:/docker-entrypoint-initdb.d/init.sql
 volumes:
   db:
     driver: local
