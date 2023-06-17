@@ -1,31 +1,36 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
 use App\Providers\DatabaseConnectionProvider;
+use PHPUnit\Framework\TestCase;
 
 class DatabaseConnectionProviderTest extends TestCase
 {
-    private $dbConnection;
+    private static $provider;
 
-    protected function setUp(): void
+    public static function setUpBeforeClass(): void
     {
-        $this->dbConnection = new DatabaseConnectionProvider(DB_NAME);
+        self::$provider = new DatabaseConnectionProvider(DB_NAME);
     }
 
-    public function testConnect()
+    public function testConnectThrowsExceptionWhenDatabaseConnectionFails()
     {
-        $this->dbConnection->connect();
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Error connecting to the database');
 
-        $this->assertInstanceOf(PDO::class, $this->dbConnection->getPDO());
+        $customProvider = new DatabaseConnectionProvider('invalid_database');
+        $customProvider->connect();
     }
 
-    public function testExecuteQuery()
+    public function testGetPdoReturnsInstanceOfPdo()
     {
-        $this->dbConnection->connect();
-        $testTable = 'product_types';
+        $pdo = self::$provider->getPDO();
 
-        $query = "SELECT * FROM " . $testTable;
-        $result = $this->dbConnection->executeQuery($query);
+        $this->assertInstanceOf(\PDO::class, $pdo);
+    }
+
+    public function testExecuteQueryReturnsQueryResult()
+    {
+        $result = self::$provider->executeQuery('SELECT * FROM taxes');
 
         $this->assertIsArray($result);
     }
