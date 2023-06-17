@@ -21,4 +21,19 @@ class SalesServiceTest extends TestCase
 
         $this->salesService->getAll();
     }
+    
+    public function testSaveCallsModelSaveWithCorrectParameters()
+    {
+        $productId = 1;
+        $quantity = 5;
+        $saleDate = '2023-06-16';
+
+        $this->salesModelMock->expects($this->once())
+            ->method('save')
+            ->willReturn('Success');
+
+        $result = $this->salesService->save($productId, $quantity, $saleDate);
+
+        $this->assertEquals('Success', $result);
+    }
 }

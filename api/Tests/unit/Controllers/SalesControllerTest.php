@@ -21,4 +21,31 @@ class SalesControllerTest extends TestCase
 
         $this->salesController->get();
     }
+
+    public function testPostWithMissingFieldsReturnsErrorMessage()
+    {
+        $data = [];
+
+        $result = $this->salesController->post($data);
+
+        $this->assertEquals('Missing required fields', $result);
+    }
+
+    public function testPostWithValidDataCallsSaveAndReturnsResult()
+    {
+        $data = [
+            'product_id' => 1,
+            'quantity' => 5,
+            'sale_date' => '2023-06-16',
+        ];
+
+        $this->salesServiceMock->expects($this->once())
+            ->method('save')
+            ->with($data['product_id'], $data['quantity'], $data['sale_date'])
+            ->willReturn('Success');
+
+        $result = $this->salesController->post($data);
+
+        $this->assertEquals('Success', $result);
+    }
 }

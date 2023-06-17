@@ -28,4 +28,23 @@ class SalesTest extends TestCase
 
         $this->assertEquals($expectedResult, $result);
     }
+
+    public function testSaveCallsExecuteQueryWithCorrectParameters()
+    {
+        $id = '123';
+        $productId = '456';
+        $quantity = 5;
+        $saleDate = '2023-06-16';
+
+        $query = 'INSERT INTO sales (id, product_id, quantity, sale_date) VALUES (?, ?, ?, ?)';
+        $params = [$id, $productId, $quantity, $saleDate];
+
+        $this->dbMock->expects($this->once())
+            ->method('executeQuery')
+            ->with($query, $params);
+
+        $result = $this->model->save($id, $productId, $quantity, $saleDate);
+
+        $this->assertEquals('success', $result);
+    }
 }
