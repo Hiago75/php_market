@@ -1,15 +1,15 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use App\Database\DatabaseConnection;
+use App\Providers\DatabaseConnectionProvider;
 
-class DatabaseConnectionTest extends TestCase
+class DatabaseConnectionProviderTest extends TestCase
 {
     private $dbConnection;
 
     protected function setUp(): void
     {
-        $this->dbConnection = new DatabaseConnection(DB_NAME);
+        $this->dbConnection = new DatabaseConnectionProvider(DB_NAME);
     }
 
     public function testConnect()

@@ -4,7 +4,7 @@ namespace App;
 
 require_once '../vendor/autoload.php';
 
-use App\Database\DatabaseConnection;
+use App\Providers\DatabaseConnectionProvider;
 
 $requestUrl = $_SERVER['REQUEST_URI'];
 
@@ -38,7 +38,7 @@ if (!class_exists($controllerClass) || !class_exists($serviceClass)) {
     die();
 }
 
-$database = new DatabaseConnection(DB_NAME);
+$database = new DatabaseConnectionProvider(DB_NAME);
 $model = new $modelClass($database);
 $service = new $serviceClass($model);
 $controller = new $controllerClass($service);

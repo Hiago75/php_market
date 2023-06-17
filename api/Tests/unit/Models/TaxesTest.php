@@ -10,7 +10,7 @@ class TaxesTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->dbMock = $this->createMock(\App\Database\DatabaseConnection::class);
+        $this->dbMock = $this->createMock(\App\Providers\DatabaseConnectionProvider::class);
         $this->taxes = new Taxes($this->dbMock);
     }
 

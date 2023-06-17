@@ -2,7 +2,7 @@
 namespace App\Controllers;
 
 use App\Services\TaxesService;
-use App\Services\DataHelperService;
+use App\Providers\DataFormaterProvider;
 
 class TaxesController
 {
@@ -21,7 +21,7 @@ class TaxesController
   public function post($data)
   {
     $requiredKeys = ['type_id', 'percentage'];
-    $dataIsPresent = DataHelperService::verifyKeys($data, $requiredKeys);
+    $dataIsPresent = DataFormaterProvider::verifyKeys($data, $requiredKeys);
     
     if (!$dataIsPresent) {
       return 'Missing required fields';

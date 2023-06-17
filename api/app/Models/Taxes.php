@@ -1,13 +1,13 @@
 <?php
 namespace App\Models;
 
-use App\Database\DatabaseConnection;
+use App\Providers\DatabaseConnectionProvider;
 
 class Taxes
 {
   private $db;
 
-  public function __construct(DatabaseConnection $db)
+  public function __construct(DatabaseConnectionProvider $db)
   {
     $this->db = $db;
   }

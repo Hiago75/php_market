@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Database;
+namespace App\Providers;
 
-class DatabaseConnection
+class DatabaseConnectionProvider
 {
     private $pdo;
     private string $dbName;

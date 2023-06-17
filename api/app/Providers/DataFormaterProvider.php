@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services;
+namespace App\Providers;
 
-class DataHelperService
+class DataFormaterProvider
 {
   public static function verifyKeys($data, $requiredKeys)
   {
