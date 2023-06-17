@@ -22,16 +22,18 @@ class ProductTypeControllerTest extends TestCase
 
     public function testPost()
     {
+        $productTypeName = 'Test Product Type';
+        $data = [
+            'name' => $productTypeName,
+        ];
+
         $productTypeServiceMock = $this->createMock(ProductTypeService::class);
         $productTypeServiceMock->expects($this->once())
-            ->method('createProductType')
+            ->method('save')
+            ->with($productTypeName)
             ->willReturn('Product type created');
 
         $productTypeController = new ProductTypeController($productTypeServiceMock);
-
-        $data = [
-            'name' => 'Test Product Type',
-        ];
 
         $result = $productTypeController->post($data);
 

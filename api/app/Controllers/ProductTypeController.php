@@ -22,6 +22,6 @@ class ProductTypeController
             return "Missing 'name' field";
         }
 
-        return $this->productTypeService->createProductType($data["name"]);
+        return $this->productTypeService->save($data["name"]);
     }
 }

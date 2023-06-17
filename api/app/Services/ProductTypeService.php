@@ -17,7 +17,7 @@ class ProductTypeService
       return $this->productType->getAll();
   }
 
-  public function createProductType(string $name)
+  public function save(string $name)
   {
     $id = hash('sha256', HASH_KEY);
 

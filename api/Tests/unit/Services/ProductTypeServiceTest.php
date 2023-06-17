@@ -32,23 +32,21 @@ class ProductTypeServiceTest extends TestCase
         $this->assertEquals($expectedResult, $result);
     }
 
-    public function testCreateProductType()
+    public function testsave()
     {
-        $id = hash('sha256', HASH_KEY);
+        // TODO: create a hash provider that receives the data to encrypt
+        $expectedResult = 'Success';
         $name = 'Test Product Type';
         
         $this->productTypeModelMock->expects($this->once())
             ->method('save')
-            ->with($id, $name)
-            ->willReturn(true);
+            ->willReturn($expectedResult);
 
         $productTypeService = new ProductTypeService($this->productTypeModelMock);
 
-        $name = 'Test Product Type';
+        $result = $productTypeService->save($name);
 
-        $result = $productTypeService->createProductType($name);
-
-        $this->assertTrue($result);
+        $this->assertEquals($expectedResult, $result);
     }
 }
 

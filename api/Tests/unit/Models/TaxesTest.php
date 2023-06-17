@@ -6,18 +6,18 @@ use PHPUnit\Framework\TestCase;
 class TaxesTest extends TestCase
 {
     private $dbMock;
-    private $taxesType;
+    private $taxes;
 
     protected function setUp(): void
     {
         $this->dbMock = $this->createMock(\App\Database\DatabaseConnection::class);
-        $this->taxesType = new Taxes($this->dbMock);
+        $this->taxes = new Taxes($this->dbMock);
     }
 
     protected function tearDown(): void
     {
         $this->dbMock = null;
-        $this->taxesType = null;
+        $this->taxes = null;
     }
 
     public function testgetAll()
@@ -33,8 +33,26 @@ class TaxesTest extends TestCase
             ->with('SELECT * FROM taxes')
             ->willReturn($expectedResult);
 
-        $result = $this->taxesType->getAll();
+        $result = $this->taxes->getAll();
 
         $this->assertEquals($expectedResult, $result);
+    }
+
+    public function testSave()
+    {
+        $id = 'abcdef123456';
+        $typeId = '1';
+        $percentage = '1';
+
+        $query = 'INSERT INTO taxes (id, type_id, percentage) VALUES (?, ?, ?)';
+        $params = [$id, $typeId, $percentage];
+
+        $this->dbMock->expects($this->once())
+            ->method('executeQuery')
+            ->with($query, $params);
+
+        $result = $this->taxes->save($id, $typeId, $percentage);
+
+        $this->assertEquals('success', $result);
     }
 }

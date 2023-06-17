@@ -17,4 +17,11 @@ class TaxesService
   {
     return $this->taxes->getAll();
   }
+
+  public function save($typeId, $percentage)
+  {
+    $id = hash('sha256', HASH_KEY);
+
+    return $this->taxes->save($id, $typeId, (int)$percentage);
+  }
 }

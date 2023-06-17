@@ -31,5 +31,20 @@ class TaxesServiceTest extends TestCase
 
         $this->assertEquals($expectedResult, $result);
     }
+
+    public function testsave()
+    {
+        $expectedResult = 'Success';
+        $typeId = 'acvbde3109380291';
+        $percentage = '0';
+        
+        $this->taxesModelMock->expects($this->once())
+            ->method('save')
+            ->willReturn($expectedResult);
+
+        $result = $this->taxesService->save($typeId, $percentage);
+
+        $this->assertEquals($expectedResult, $result);
+    }
 }
 
