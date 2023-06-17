@@ -48,7 +48,7 @@ class ProductsServiceTest extends TestCase
     {
         $expectedResult = 'Success';
         $name = 'Teste product';
-        $type_id = '1';
+        $typeId = '1';
         $price = "20.00";
    
         $this->productsModelMock->expects($this->once())
@@ -57,7 +57,7 @@ class ProductsServiceTest extends TestCase
 
         $productsService = new ProductsService($this->productsModelMock);
 
-        $result = $productsService->save($name, $type_id,$price);
+        $result = $productsService->save($name, $typeId,$price);
 
         $this->assertEquals($expectedResult, $result);
     }

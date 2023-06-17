@@ -1,41 +1,57 @@
 <?php
-use PHPUnit\Framework\TestCase;
 use App\Controllers\TaxesController;
 use App\Services\TaxesService;
+use App\Providers\DataFormaterProvider;
+use PHPUnit\Framework\TestCase;
 
 class TaxesControllerTest extends TestCase
 {
-    public function testGet()
+    private $serviceMock;
+    private $controller;
+
+    protected function setUp(): void
     {
-        $taxesServiceMock = $this->createMock(TaxesService::class);
-        $taxesServiceMock->expects($this->once())
-            ->method('getAll')
-            ->willReturn(['Type 1', 'Type 2', 'Type 3']);
-
-        $taxesController = new TaxesController($taxesServiceMock);
-
-        $output = json_encode($taxesController->get());
-
-        $expectedOutput = json_encode(['Type 1', 'Type 2', 'Type 3']);
-        $this->assertEquals($expectedOutput, $output);
+        $this->serviceMock = $this->createMock(TaxesService::class);
+        $this->controller = new TaxesController($this->serviceMock);
     }
 
-    public function testSave()
+    public function testGetReturnsAllTaxes()
+    {
+        $expectedResult = ['Type 1', 'Type 2', 'Type 3'];
+
+        $this->serviceMock->expects($this->once())
+            ->method('getAll')
+            ->willReturn($expectedResult);
+
+        $result = $this->controller->get();
+
+        $this->assertEquals($expectedResult, $result);
+    }
+
+    public function testPostMissingRequiredFieldsReturnsErrorMessage()
     {
         $data = [
             "type_id" => "1",
-            "percentage" => "0"
         ];
 
-        $taxesServiceMock = $this->createMock(TaxesService::class);
-        $taxesServiceMock->expects($this->once())
-            ->method('save')
-            ->with(1, 0)
-            ->willReturn('Success');
-        
-        $taxesController = new TaxesController($taxesServiceMock);
+        $result = $this->controller->post($data);
 
-        $result = $taxesController->post($data);
+        $this->assertEquals('Missing required fields', $result);
+    }
+
+    public function testPostSavesTaxAndReturnsSuccessMessage()
+    {
+        $data = [
+            "type_id" => "1",
+            "percentage" => "10"
+        ];
+
+        $this->serviceMock->expects($this->once())
+            ->method('save')
+            ->with(1, 10)
+            ->willReturn('Success');
+
+        $result = $this->controller->post($data);
 
         $this->assertEquals('Success', $result);
     }

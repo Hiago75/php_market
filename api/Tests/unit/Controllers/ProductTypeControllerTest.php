@@ -1,42 +1,53 @@
 <?php
-use PHPUnit\Framework\TestCase;
 use App\Controllers\ProductTypeController;
 use App\Services\ProductTypeService;
+use App\Providers\DataFormaterProvider;
+use PHPUnit\Framework\TestCase;
 
 class ProductTypeControllerTest extends TestCase
 {
-    public function testGet()
+    private $serviceMock;
+    private $controller;
+
+    protected function setUp(): void
     {
-        $productTypeServiceMock = $this->createMock(ProductTypeService::class);
-        $productTypeServiceMock->expects($this->once())
-            ->method('getAll')
-            ->willReturn(['Type 1', 'Type 2', 'Type 3']);
-
-        $productTypeController = new ProductTypeController($productTypeServiceMock);
-
-        $output = json_encode($productTypeController->get());
-
-        $expectedOutput = json_encode(['Type 1', 'Type 2', 'Type 3']);
-        $this->assertEquals($expectedOutput, $output);
+        $this->serviceMock = $this->createMock(ProductTypeService::class);
+        $this->controller = new ProductTypeController($this->serviceMock);
     }
 
-    public function testPost()
+    public function testGetCallsGetAllAndReturnsResult()
     {
-        $productTypeName = 'Test Product Type';
-        $data = [
-            'name' => $productTypeName,
-        ];
+        $expectedResult = ['Type 1', 'Type 2', 'Type 3'];
 
-        $productTypeServiceMock = $this->createMock(ProductTypeService::class);
-        $productTypeServiceMock->expects($this->once())
+        $this->serviceMock->expects($this->once())
+            ->method('getAll')
+            ->willReturn($expectedResult);
+
+        $result = $this->controller->get();
+
+        $this->assertEquals($expectedResult, $result);
+    }
+
+    public function testPostWithMissingNameFieldReturnsErrorMessage()
+    {
+        $data = [];
+
+        $result = $this->controller->post($data);
+
+        $this->assertEquals('Missing required fields', $result);
+    }
+
+    public function testPostWithValidDataCallsSaveAndReturnsSuccessMessage()
+    {
+        $data = ['name' => 'Type 1'];
+
+        $this->serviceMock->expects($this->once())
             ->method('save')
-            ->with($productTypeName)
-            ->willReturn('Product type created');
+            ->with($data['name'])
+            ->willReturn('success');
 
-        $productTypeController = new ProductTypeController($productTypeServiceMock);
+        $result = $this->controller->post($data);
 
-        $result = $productTypeController->post($data);
-
-        $this->assertEquals('Product type created', $result);
+        $this->assertEquals('success', $result);
     }
 }
