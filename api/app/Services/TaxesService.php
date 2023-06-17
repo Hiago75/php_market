@@ -19,6 +19,11 @@ class TaxesService
     return $this->taxes->getAll();
   }
 
+  public function getById($id)
+  {
+    return $this->taxes->getById($id);
+  }
+
   public function save($typeId, $percentage)
   {
     $id = HashProvider::generateHash($typeId);

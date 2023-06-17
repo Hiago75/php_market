@@ -17,6 +17,18 @@ class Taxes
     return $this->db->executeQuery('SELECT * FROM taxes');
   }
 
+  public function getById(string $id)
+  {
+      $query = 'SELECT * FROM taxes WHERE id = ?';
+      $params = [$id];
+      $taxes = $this->db->executeQuery($query, $params);
+  
+      if (empty($taxes)) {
+          throw new \Exception('Taxes not found');
+      }
+  
+      return $taxes;
+  }
 
   public function save(string $id, string $typeId, int $percentage)
   {

@@ -7,24 +7,43 @@ use PHPUnit\Framework\TestCase;
 
 class TaxesServiceTest extends TestCase
 {
-    private $modelMock;
-    private $service;
+    private $taxesModelMock;
+    private $taxesServiceMock;
 
     protected function setUp(): void
     {
-        $this->modelMock = $this->createMock(Taxes::class);
-        $this->service = new TaxesService($this->modelMock);
+        $this->taxesModelMock = $this->createMock(Taxes::class);
+        $this->taxesServiceMock = new TaxesService($this->taxesModelMock);
     }
 
     public function testGetAllCallsModelGetAllAndReturnsResult()
     {
         $expectedResult = ['Type 1', 'Type 2', 'Type 3'];
 
-        $this->modelMock->expects($this->once())
+        $this->taxesModelMock->expects($this->once())
             ->method('getAll')
             ->willReturn($expectedResult);
 
-        $result = $this->service->getAll();
+        $result = $this->taxesServiceMock->getAll();
+
+        $this->assertEquals($expectedResult, $result);
+    }
+
+    public function testGetById()
+    {
+        $expectedResult = [
+            [
+                'id' => '1',
+                'type_id' => '1',
+                'percentage' => '12'
+            ],
+        ];
+
+        $this->taxesModelMock->expects($this->once())
+            ->method('getById')
+            ->willReturn($expectedResult);
+        
+        $result = $this->taxesServiceMock->getById('1');
 
         $this->assertEquals($expectedResult, $result);
     }
@@ -34,11 +53,11 @@ class TaxesServiceTest extends TestCase
         $typeId = '1';
         $percentage = '10';
         
-        $this->modelMock->expects($this->once())
+        $this->taxesModelMock->expects($this->once())
             ->method('save')
             ->willReturn('Success');
 
-        $result = $this->service->save($typeId, $percentage);
+        $result = $this->taxesServiceMock->save($typeId, $percentage);
 
         $this->assertEquals('Success', $result);
     }

@@ -13,9 +13,13 @@ class TaxesController
     $this->taxesService = $taxesService;
   }
 
-  public function get()
+  public function get($id = null)
   {
-    return $this->taxesService->getAll();
+    if ($id !== null) {
+      return $this->taxesService->getById($id);
+  }
+
+  return $this->taxesService->getAll();
   }
 
   public function post($data)

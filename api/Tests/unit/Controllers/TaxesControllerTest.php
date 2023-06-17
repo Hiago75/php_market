@@ -6,27 +6,43 @@ use PHPUnit\Framework\TestCase;
 
 class TaxesControllerTest extends TestCase
 {
-    private $serviceMock;
-    private $controller;
+    private $taxesServiceMock;
+    private $taxesController;
 
     protected function setUp(): void
     {
-        $this->serviceMock = $this->createMock(TaxesService::class);
-        $this->controller = new TaxesController($this->serviceMock);
+        $this->taxesServiceMock = $this->createMock(TaxesService::class);
+        $this->taxesController = new TaxesController($this->taxesServiceMock);
     }
 
     public function testGetReturnsAllTaxes()
     {
         $expectedResult = ['Type 1', 'Type 2', 'Type 3'];
 
-        $this->serviceMock->expects($this->once())
+        $this->taxesServiceMock->expects($this->once())
             ->method('getAll')
             ->willReturn($expectedResult);
 
-        $result = $this->controller->get();
+        $result = $this->taxesController->get();
 
         $this->assertEquals($expectedResult, $result);
     }
+
+    public function testGetByIdReturnsProductById()
+    {
+        $taxId = 1;
+        $expectedResult = ['id' => $taxId, 'type_id' => '2', 'percentage' => '12'];
+
+        $this->taxesServiceMock->expects($this->once())
+            ->method('getById')
+            ->with($taxId)
+            ->willReturn($expectedResult);
+
+        $result = $this->taxesController->get($taxId);
+
+        $this->assertEquals($expectedResult, $result);
+    }
+
 
     public function testPostMissingRequiredFieldsReturnsErrorMessage()
     {
@@ -34,7 +50,7 @@ class TaxesControllerTest extends TestCase
             "type_id" => "1",
         ];
 
-        $result = $this->controller->post($data);
+        $result = $this->taxesController->post($data);
 
         $this->assertEquals('Missing required fields', $result);
     }
@@ -46,12 +62,12 @@ class TaxesControllerTest extends TestCase
             "percentage" => "10"
         ];
 
-        $this->serviceMock->expects($this->once())
+        $this->taxesServiceMock->expects($this->once())
             ->method('save')
             ->with(1, 10)
             ->willReturn('Success');
 
-        $result = $this->controller->post($data);
+        $result = $this->taxesController->post($data);
 
         $this->assertEquals('Success', $result);
     }
