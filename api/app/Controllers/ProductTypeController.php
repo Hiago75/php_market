@@ -2,6 +2,7 @@
 namespace App\Controllers;
 
 use App\Services\ProductTypeService;
+use App\Providers\DataFormaterProvider;
 
 class ProductTypeController
 {
@@ -18,8 +19,11 @@ class ProductTypeController
     }
 
     public function post($data) {
-        if (!array_key_exists("name", $data)) {
-            return "Missing 'name' field";
+        $requiredKeys = ['name'];
+        $dataIsPresent = DataFormaterProvider::verifyKeys($data, $requiredKeys);
+        
+        if (!$dataIsPresent) {
+          return 'Missing required fields';
         }
 
         return $this->productTypeService->save($data["name"]);
