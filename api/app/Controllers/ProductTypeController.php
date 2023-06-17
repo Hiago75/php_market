@@ -17,4 +17,11 @@ class ProductTypeController
         return $this->productTypeService->getAllProductTypes();
     }
 
+    public function post($data) {
+        if (!array_key_exists("name", $data)) {
+            return "Missing 'name' field";
+        }
+
+        return $this->productTypeService->createProductType($data["name"]);
+    }
 }

@@ -45,9 +45,10 @@ $controller = new $controllerClass($service);
 
 $httpMethod = $_SERVER['REQUEST_METHOD'];
 $methodName = strtolower($httpMethod);
+$entityBody = json_decode(file_get_contents('php://input'), true);
 
 if (method_exists($controller, $methodName)) {
-    $response = $controller->$methodName();
+    $response = $controller->$methodName($entityBody);
     http_response_code(200);
 
     echo json_encode(['data' => $response], JSON_UNESCAPED_UNICODE);

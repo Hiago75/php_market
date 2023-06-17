@@ -37,4 +37,21 @@ class ProductTypeTest extends TestCase
 
         $this->assertEquals($expectedResult, $result);
     }
+
+    public function testSave()
+    {
+        $id = 'abcdef123456';
+        $name = 'Test Product Type';
+
+        $query = 'INSERT INTO product_types (id, name) VALUES (?, ?)';
+        $params = [$id, $name];
+
+        $this->dbMock->expects($this->once())
+            ->method('executeQuery')
+            ->with($query, $params);
+
+        $result = $this->productType->save($id, $name);
+
+        $this->assertEquals('success', $result);
+    }
 }
