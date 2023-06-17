@@ -7,12 +7,12 @@ class ProductType
 {
     private $db;
 
-    public function __construct($db)
+    public function __construct(DatabaseConnection $db)
     {
         $this->db = $db;
     }
 
-    public function getAllProductTypes()
+    public function getAll()
     {
         return $this->db->executeQuery('SELECT id, name FROM product_types');
     }

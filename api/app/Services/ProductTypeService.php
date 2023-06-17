@@ -7,14 +7,14 @@ class ProductTypeService
 {
   private $productType;
 
-  public function __construct($model)
+  public function __construct(ProductType $model)
   {
     $this->productType = $model;
   }
 
-  public function getAllProductTypes()
+  public function getAll()
   {
-      return $this->productType->getAllProductTypes();
+      return $this->productType->getAll();
   }
 
   public function createProductType(string $name)

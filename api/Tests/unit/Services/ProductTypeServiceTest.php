@@ -20,14 +20,14 @@ class ProductTypeServiceTest extends TestCase
         $this->productTypeService = null;
     }
 
-    public function testGetAllProductTypes()
+    public function testgetAll()
     {
         $expectedResult = ['Type 1', 'Type 2', 'Type 3'];
         $this->productTypeModelMock->expects($this->once())
-            ->method('getAllProductTypes')
+            ->method('getAll')
             ->willReturn($expectedResult);
 
-        $result = $this->productTypeService->getAllProductTypes();
+        $result = $this->productTypeService->getAll();
 
         $this->assertEquals($expectedResult, $result);
     }

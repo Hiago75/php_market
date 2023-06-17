@@ -14,7 +14,7 @@ class ProductTypeController
 
     public function get()
     {
-        return $this->productTypeService->getAllProductTypes();
+        return $this->productTypeService->getAll();
     }
 
     public function post($data) {

@@ -9,7 +9,7 @@ class ProductTypeControllerTest extends TestCase
     {
         $productTypeServiceMock = $this->createMock(ProductTypeService::class);
         $productTypeServiceMock->expects($this->once())
-            ->method('getAllProductTypes')
+            ->method('getAll')
             ->willReturn(['Type 1', 'Type 2', 'Type 3']);
 
         $productTypeController = new ProductTypeController($productTypeServiceMock);

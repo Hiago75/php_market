@@ -20,7 +20,7 @@ class ProductTypeTest extends TestCase
         $this->productType = null;
     }
 
-    public function testGetAllProductTypes()
+    public function testgetAll()
     {
         $expectedResult = [
             ['id' => 1, 'name' => 'Type 1'],
@@ -33,7 +33,7 @@ class ProductTypeTest extends TestCase
             ->with('SELECT id, name FROM product_types')
             ->willReturn($expectedResult);
 
-        $result = $this->productType->getAllProductTypes();
+        $result = $this->productType->getAll();
 
         $this->assertEquals($expectedResult, $result);
     }
