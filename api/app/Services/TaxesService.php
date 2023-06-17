@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Taxes;
+use App\Providers\HashProvider;
 
 class TaxesService
 {
@@ -20,7 +21,7 @@ class TaxesService
 
   public function save($typeId, $percentage)
   {
-    $id = hash('sha256', HASH_KEY);
+    $id = HashProvider::generateHash($typeId);
 
     return $this->taxes->save($id, $typeId, (int)$percentage);
   }

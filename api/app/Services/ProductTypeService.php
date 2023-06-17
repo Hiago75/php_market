@@ -2,6 +2,7 @@
 namespace App\Services;
 
 use App\Models\ProductType;
+use App\Providers\HashProvider;
 
 class ProductTypeService
 {
@@ -19,7 +20,7 @@ class ProductTypeService
 
   public function save(string $name)
   {
-    $id = hash('sha256', HASH_KEY);
+    $id = HashProvider::generateHash($name);
 
     return $this->productType->save($id, $name);
   }

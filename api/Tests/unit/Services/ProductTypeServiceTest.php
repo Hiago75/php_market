@@ -34,10 +34,9 @@ class ProductTypeServiceTest extends TestCase
 
     public function testsave()
     {
-        // TODO: create a hash provider that receives the data to encrypt
         $expectedResult = 'Success';
         $name = 'Test Product Type';
-        
+   
         $this->productTypeModelMock->expects($this->once())
             ->method('save')
             ->willReturn($expectedResult);
