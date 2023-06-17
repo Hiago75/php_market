@@ -18,6 +18,19 @@ class Products
         return $this->db->executeQuery('SELECT * FROM products');
     }
 
+    public function getById(string $id)
+    {
+        $query = 'SELECT * FROM products WHERE id = ?';
+        $params = [$id];
+        $product = $this->db->executeQuery($query, $params);
+    
+        if (empty($product)) {
+            throw new \Exception('Product not found');
+        }
+    
+        return $product;
+    }
+
     public function save(string $id, string $name, string $typeId, float $price)
     {
         $query = 'INSERT INTO products (id, name, type_id, price) VALUES (?, ?, ?, ?)';

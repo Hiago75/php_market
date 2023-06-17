@@ -47,13 +47,18 @@ $httpMethod = $_SERVER['REQUEST_METHOD'];
 $methodName = strtolower($httpMethod);
 $entityBody = json_decode(file_get_contents('php://input'), true);
 
-if (method_exists($controller, $methodName)) {
-    $response = $controller->$methodName($entityBody);
-    http_response_code(200);
-
-    echo json_encode(['data' => $response], JSON_UNESCAPED_UNICODE);
+if ($httpMethod === 'GET') {
+    $id = isset($urlParts[1]) ? $urlParts[1] : null;
+    $response = $controller->$methodName($id);
 } else {
-    http_response_code(405);
-    
-    echo 'Invalid HTTP method';
+    if (method_exists($controller, $methodName)) {
+        $response = $controller->$methodName($entityBody);
+    } else {
+        http_response_code(405);
+        echo 'Invalid HTTP method';
+        die();
+    }
 }
+
+http_response_code(200);
+echo json_encode(['data' => $response], JSON_UNESCAPED_UNICODE);

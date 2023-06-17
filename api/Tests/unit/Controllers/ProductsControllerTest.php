@@ -14,31 +14,32 @@ class ProductsControllerTest extends TestCase
         $this->productsController = new ProductsController($this->productsServiceMock);
     }
 
-    public function testGet()
+    public function testGetAllReturnsAllProducts()
     {
-        $expectedOutput = [
-            [
-                'id' => '1',
-                'name' => 'Smartphone',
-                'type_id' => '1',
-                'price' => '1200.00'
-            ],
-            [
-                'id' => '2',
-                'name' => 'Smartphone 2',
-                'type_id' => '1',
-                'price' => '1500.00'
-            ]
-        ];
-        
+        $expectedResult = ['Product 1', 'Product 2', 'Product 3'];
+
         $this->productsServiceMock->expects($this->once())
             ->method('getAll')
-            ->willReturn($expectedOutput);
+            ->willReturn($expectedResult);
 
-        $output = json_encode($this->productsController->get());
-        $encodedExpectedOutput = json_encode($expectedOutput);
+        $result = $this->productsController->get();
 
-        $this->assertEquals($encodedExpectedOutput, $output);
+        $this->assertEquals($expectedResult, $result);
+    }
+
+    public function testGetByIdReturnsProductById()
+    {
+        $productId = 1;
+        $expectedProduct = ['id' => $productId, 'name' => 'Product 1'];
+
+        $this->productsServiceMock->expects($this->once())
+            ->method('getById')
+            ->with($productId)
+            ->willReturn($expectedProduct);
+
+        $result = $this->productsController->get($productId);
+
+        $this->assertEquals($expectedProduct, $result);
     }
 
     public function testPostReturnsMissingFieldsWhenDataIsNotPresent()

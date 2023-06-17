@@ -20,7 +20,7 @@ class ProductsTest extends TestCase
         $this->products = null;
     }
 
-    public function testgetAll()
+    public function testGetAll()
     {
         $expectedResult = [
           [
@@ -44,6 +44,38 @@ class ProductsTest extends TestCase
 
         $result = $this->products->getAll();
 
+        $this->assertEquals($expectedResult, $result);
+    }
+
+    public function testGetReturnsErrorIfProductIsNotFound()
+    {
+        $this->dbMock->expects($this->once())
+        ->method('executeQuery')
+        ->willReturn([]);
+
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Product not found');
+        $this->products->getById('123');
+    }
+
+    public function testGetById()
+    {
+        $expectedResult = [
+            [
+                'id' => '1',
+                'name' => 'Smartphone',
+                'type_id' => '1',
+                'price' => '1200.00'
+            ],
+        ];
+
+        $this->dbMock->expects($this->once())
+            ->method('executeQuery')
+            ->with('SELECT * FROM products')
+            ->willReturn($expectedResult);
+        
+        $result = $this->products->getAll();
+        
         $this->assertEquals($expectedResult, $result);
     }
 

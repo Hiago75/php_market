@@ -44,6 +44,27 @@ class ProductsServiceTest extends TestCase
 
         $this->assertEquals($expectedResult, $result);
     }
+
+    public function testGetById()
+    {
+        $expectedResult = [
+            [
+                'id' => '1',
+                'name' => 'Smartphone',
+                'type_id' => '1',
+                'price' => '1200.00'
+            ],
+        ];
+
+        $this->productsModelMock->expects($this->once())
+            ->method('getById')
+            ->willReturn($expectedResult);
+        
+        $result = $this->productsService->getById('1');
+
+        $this->assertEquals($expectedResult, $result);
+    }
+
     public function testsave()
     {
         $expectedResult = 'Success';

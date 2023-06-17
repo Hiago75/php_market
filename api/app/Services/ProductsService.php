@@ -18,6 +18,11 @@ class ProductsService
       return $this->products->getAll();
   }
 
+  public function getById(string $id)
+  {
+    return $this->products->getById($id);
+  }
+
   public function save($name, $typeId, $price)
   {
     $id = HashProvider::generateHash($name);
