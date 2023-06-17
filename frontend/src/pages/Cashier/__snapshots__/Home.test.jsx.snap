@@ -13,6 +13,17 @@ exports[`Cashier should match the snapshot 1`] = `
       </h1>
       <time />
     </header>
+    <div
+      class="ProductCard"
+    >
+      <span
+        class="ProductCard-icon"
+        data-testid="product-icon"
+      />
+      <p>
+        Product name
+      </p>
+    </div>
   </main>
 </DocumentFragment>
 `;
