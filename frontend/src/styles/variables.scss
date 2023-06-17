@@ -4,14 +4,28 @@
 
 /* Brand colors */
 $dark-blue: #292c4a;
+$slat-blue: #3e4b5d;
+$cadet-blue: #97a5b5;
 
 /* Neutral colors */
 $white: #f5f7fb;
 
-
 /*=====  End of Colors  ======*/
 
+/*=============================================
+=                 Typography                  =
+=============================================*/
 
+/* Font sizes */
+$font-sizes: (
+  base: 1.25rem
+);
+
+/* Heading font sizes */
+
+$h-1: 2rem;
+
+/*=====  End of Typography  ======*/
 
 /*=============================================
 =                 Spacing                     =
@@ -19,5 +33,7 @@ $white: #f5f7fb;
 
 $spacing: (
   none: 0rem,
-  lg: 1.875rem)
-  /*=====  End of Spacing  ======*/
+  lg: 1.875rem
+);
+
+/*=====  End of Spacing  ======*/
