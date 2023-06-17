@@ -5,6 +5,15 @@ use App\Services\ProductsService;
 
 class ProductsControllerTest extends TestCase
 {
+    private $productsServiceMock;
+    private $productsController;
+
+    protected function setUp(): void
+    {
+        $this->productsServiceMock = $this->createMock(ProductsService::class);
+        $this->productsController = new ProductsController($this->productsServiceMock);
+    }
+
     public function testGet()
     {
         $expectedOutput = [
@@ -21,16 +30,39 @@ class ProductsControllerTest extends TestCase
                 'price' => '1500.00'
             ]
         ];
-        $productsServiceMock = $this->createMock(ProductsService::class);
-        $productsServiceMock->expects($this->once())
+        
+        $this->productsServiceMock->expects($this->once())
             ->method('getAll')
             ->willReturn($expectedOutput);
 
-        $productsController = new ProductsController($productsServiceMock);
-
-        $output = json_encode($productsController->get());
+        $output = json_encode($this->productsController->get());
         $encodedExpectedOutput = json_encode($expectedOutput);
 
         $this->assertEquals($encodedExpectedOutput, $output);
+    }
+
+    public function testPostReturnsMissingFieldsWhenDataIsNotPresent()
+    {
+        $data = [];
+
+        $expected = 'Missing required fields';
+        $actual = $this->productsController->post($data);
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testPostCallsSaveMethodWithCorrectData()
+    {
+        $data = [
+            'name' => 'Test',
+            'type_id' => 1,
+            'price' => 10.99,
+        ];
+
+        $this->productsServiceMock->expects($this->once())
+            ->method('save')
+            ->with($data['name'], $data['type_id'], $data['price']);
+
+        $this->productsController->post($data);
     }
 }

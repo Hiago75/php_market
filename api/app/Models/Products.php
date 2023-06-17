@@ -16,4 +16,14 @@ class Products
     {
         return $this->db->executeQuery('SELECT * FROM products');
     }
+
+    public function save(string $id, string $name, string $typeId, float $price)
+    {
+        $query = 'INSERT INTO products (id, name, type_id, price) VALUES (?, ?, ?, ?)';
+        $params = [$id, $name, $typeId, $price];
+
+        $this->db->executeQuery($query, $params);
+
+        return 'success';
+    }
 }
