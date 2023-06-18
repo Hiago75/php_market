@@ -1,36 +1,55 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import Cashier from '.';
-import formatDate from '../../utils/formatDate';
+import { fireEvent, render, screen } from '@testing-library/react';
+import Cashier from './';
 
-jest.mock('../../utils/formatDate');
+jest.mock('../../hooks/useFetchData', () => ({
+  __esModule: true,
+  default: () => ({
+    data: {
+      data: [
+        {
+          id: '1001',
+          name: 'Smartphone',
+          type_id: '1',
+          price: '1200.00',
+          type_name: 'Eletrônicos',
+          tax_percentage: '18.00',
+        },
+        {
+          id: '1002',
+          name: 'TV LED',
+          type_id: '1',
+          price: '1500.00',
+          type_name: 'Eletrônicos',
+          tax_percentage: '18.00',
+        },
+      ],
+    },
+    loading: false,
+    error: null,
+  }),
+}));
 
-describe('Cashier', () => {
-  beforeAll(() => {
-    const mockDate = new Date('2023-06-17T12:34:56');
-    formatDate.mockReturnValue('Sat, 17 Jun 2023');
-    global.Date = jest.fn(() => mockDate);
-  });
+describe('Cashier component', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  })
 
-  afterAll(() => {
-    global.Date = Date;
-  });
-
-  it('should render correctly', () => {
+  it('should render product cards', () => {
     render(<Cashier />);
-    expect(screen.getByText(/Nova venda/i)).toBeInTheDocument();
+    const productCardElements = screen.getAllByTestId('product-card');
+    expect(productCardElements).toHaveLength(2);
   });
 
-  it('should add selected product to the cart when ProductCard is clicked', () => {
+  it('should handle product click', () => {
     render(<Cashier />);
-    const productCard = screen.getByText('Melon');
-
-    expect(screen.queryAllByTestId('product-line')).toHaveLength(0);
-
-    fireEvent.click(productCard);
-
-    const productLines = screen.getAllByTestId('product-line');
-    expect(productLines).toHaveLength(1);
-    expect(productLines[0]).toHaveTextContent('Melon');
+    const productCardElements = screen.getAllByTestId('product-card');
+    const productCardElement = productCardElements.find(card => card.getAttribute('data-product-id') === '1001');
+  
+    fireEvent.click(productCardElement);
+  
+    const productLine = screen.getAllByTestId('product-line');
+    const productLineElement = productLine.find(card => card.getAttribute('data-product-id') === '1001');
+    expect(productLineElement).toBeInTheDocument();
   });
 });

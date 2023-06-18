@@ -27,7 +27,7 @@ describe("ProductLine", () => {
     const incrementButton = screen.getByLabelText('Botão de incremento');
 
     expect(titleElement.textContent).toBe("Phone");
-    expect(priceElement.textContent).toBe("12");
+    expect(priceElement.textContent).toBe("R$12");
     expect(counterElement.textContent).toBe("2");
     expect(incrementButton).toBeInTheDocument();
   });

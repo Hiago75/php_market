@@ -1,25 +1,13 @@
 import React, { useState } from 'react';
 
+import useFetchData from '../../hooks/useFetchData';
 import formatDate from '../../utils/formatDate';
 import ProductGrid from '../../Components/Organisms/ProductGrid';
-
-import '../../styles/container.scss'
-import './index.scss';
 import ProductCard from '../../Components/Molecules/ProductCard';
 import Cart from '../../Components/Organisms/Cart';
 
-
-const mockProducts = [
-  {name: 'Phone', category: 'Eletrônicos', price: 12 , taxesPercentage: '12'},
-  {name: 'Leggins', category: 'Roupas', price: 8, taxesPercentage: 8},
-  {name: 'Melon', category: 'Alimentos', price: 8, taxesPercentage: 5},
-  {name: 'Mouse', category: 'Eletrônicos', price: 12, taxesPercentage: 12},
-  {name: 'T-shirt', category: 'Roupas', price: 5, taxesPercentage: 12},
-  {name: 'Hat', category: 'Roupas', price: 5, taxesPercentage: 8},
-  {name: 'Banana', category: 'Alimentos', price: 8, taxesPercentage: 5},
-  {name: 'Keyboard', category: 'Eletrônicos', price: 12, taxesPercentage: 12},
-]
-
+import '../../styles/container.scss'
+import './index.scss';
 
 export default function Cashier() {
   const currentDate = formatDate(new Date())
@@ -42,8 +30,15 @@ export default function Cashier() {
       ]);
     }
   };
+
+  const { data, loading, error } = useFetchData('http://localhost:8080/products');
   
-  
+  if(loading) {
+    return <>loading</>
+  }
+
+  const products = data.data
+
   return (
     <main className='Cashier Container'>
       <section>
@@ -52,7 +47,7 @@ export default function Cashier() {
           <time>{currentDate}</time>
         </header>
         <ProductGrid>
-          {mockProducts.map((product) => (
+          {products.map((product) => (
             <ProductCard key={product.name} onClick={() => handleProductClick(product)} product={product} />
           ))}
         </ProductGrid>

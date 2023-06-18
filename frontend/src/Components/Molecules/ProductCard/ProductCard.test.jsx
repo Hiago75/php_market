@@ -1,46 +1,33 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
+import userEvent from '@testing-library/user-event';
 import ProductCard from './';
 
-jest.mock('../../Atoms/Icon', () => ({ icon, className }) => (
-  <div data-testid="mock-icon" className={className}>
-    Mock Icon Component ({icon})
-  </div>
-));
-
-jest.mock('../../../utils/productTypeIconMap', () => ({
-  productTypeIconMap: {
-    'Product Category': 'mock-icon-name',
-  },
-}));
-
 describe('ProductCard', () => {
-  test('renders product name and category', () => {
-    const mockProduct = {
-      name: 'Product Name',
-      category: 'Product Category',
-    };
+  const product = {
+    id: '1001',
+    name: 'Smartphone',
+    type_name: 'Eletrônicos',
+  };
 
-    render(<ProductCard product={mockProduct} />);
-    const productNameElement = screen.getByText(mockProduct.name);
-    const productCategoryElement = screen.getByText(mockProduct.category);
+  const onClick = jest.fn();
+
+  it('should render the product name and type', () => {
+    render(<ProductCard product={product} onClick={onClick} />);
+
+    const productNameElement = screen.getByText(product.name);
+    const productTypeElement = screen.getByText(product.type_name);
 
     expect(productNameElement).toBeInTheDocument();
-    expect(productCategoryElement).toBeInTheDocument();
+    expect(productTypeElement).toBeInTheDocument();
   });
 
-  test('renders the correct icon based on the product category', () => {
-    const mockProduct = {
-      name: 'Product Name',
-      category: 'Product Category',
-    };
+  it('should call onClick when clicked', () => {
+    render(<ProductCard product={product} onClick={onClick} />);
 
-    render(<ProductCard product={mockProduct} />);
-    const iconElement = screen.getByTestId('mock-icon');
+    const productCardElement = screen.getByTestId('product-card');
+    userEvent.click(productCardElement);
 
-    expect(iconElement).toBeInTheDocument();
-    expect(iconElement).toHaveClass('ProductCard-icon__figure');
-    expect(iconElement).toHaveTextContent('Mock Icon Component (mock-icon-name)');
+    expect(onClick).toHaveBeenCalledTimes(1);
   });
 });

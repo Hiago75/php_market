@@ -46,6 +46,9 @@ $controller = new $controllerClass($service);
 $httpMethod = $_SERVER['REQUEST_METHOD'];
 $methodName = strtolower($httpMethod);
 $entityBody = json_decode(file_get_contents('php://input'), true);
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
 if ($httpMethod === 'GET') {
     $id = isset($urlParts[1]) ? $urlParts[1] : null;
