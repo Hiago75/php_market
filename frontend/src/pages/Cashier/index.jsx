@@ -20,14 +20,14 @@ export default function Cashier() {
           <time>{currentDate}</time>
         </header>
         <ProductGrid>
-          <ProductCard product={{name: 'Melon', category: 'Fruit'}} />
-          <ProductCard product={{name: 'Melon', category: 'Fruit'}} />
-          <ProductCard product={{name: 'Melon', category: 'Fruit'}} />
-          <ProductCard product={{name: 'Melon', category: 'Fruit'}} />
-          <ProductCard product={{name: 'Melon', category: 'Fruit'}} />
-          <ProductCard product={{name: 'Melon', category: 'Fruit'}} />
-          <ProductCard product={{name: 'Melon', category: 'Fruit'}} />
-          <ProductCard product={{name: 'Melon', category: 'Fruit'}} />
+          <ProductCard product={{name: 'Melon', category: 'Eletrônicos'}} />
+          <ProductCard product={{name: 'Melon', category: 'Roupas'}} />
+          <ProductCard product={{name: 'Melon', category: 'Alimentos'}} />
+          <ProductCard product={{name: 'Melon', category: 'Eletrônicos'}} />
+          <ProductCard product={{name: 'Melon', category: 'Roupas'}} />
+          <ProductCard product={{name: 'Melon', category: 'Roupas'}} />
+          <ProductCard product={{name: 'Melon', category: 'Alimentos'}} />
+          <ProductCard product={{name: 'Melon', category: 'Eletrônicos'}} />
         </ProductGrid>
       </section>
       <Cart>
