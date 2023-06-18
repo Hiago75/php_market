@@ -7,6 +7,7 @@ import '../../styles/container.scss'
 import './index.scss';
 import ProductCard from '../../Components/Molecules/ProductCard';
 import Cart from '../../Components/Organisms/Cart';
+import ProductLine from '../../Components/Molecules/ProductLine';
 
 export default function Cashier() {
   const currentDate = formatDate(new Date())
@@ -30,22 +31,10 @@ export default function Cashier() {
         </ProductGrid>
       </section>
       <Cart>
-        <li>
-          <h3>Melon</h3>
-          <p>$8</p>
-        </li>
-        <li>
-          <h3>Melon</h3>
-          <p>$8</p>
-        </li>
-        <li>
-          <h3>Melon</h3>
-          <p>$8</p>
-        </li>
-        <li>
-          <h3>Melon</h3>
-          <p>$8</p>
-        </li>
+        <ProductLine />
+        <ProductLine />
+        <ProductLine />
+        <ProductLine />
       </Cart>
     </main>
   )
