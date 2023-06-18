@@ -6,11 +6,11 @@ import {productTypeIconMap} from '..//../../utils/productTypeIconMap';
 import './index.scss';
 
 
-export default function ProductCard({ product }) {
+export default function ProductCard({ product, onClick }) {
   const iconName = productTypeIconMap[product.category]
 
   return(
-    <div data-testid="product-card" className="ProductCard">
+    <div data-testid="product-card" className="ProductCard" onClick={onClick}>
       <div className="ProductCard-icon">
         <Icon icon={iconName} className="ProductCard-icon__figure" />
       </div>

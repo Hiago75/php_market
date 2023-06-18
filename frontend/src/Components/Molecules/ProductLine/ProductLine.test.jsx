@@ -4,14 +4,16 @@ import ProductLine from "./";
 
 describe("ProductLine", () => {
   it("should render product line with initial counter value", () => {
-    render(<ProductLine />);
+    const product = { name: "Melon", category: "Eletrônicos", price: "$8" };
+    render(<ProductLine product={product} />);
     const counterElement = screen.getByTestId("product-line__counter");
 
     expect(counterElement).toHaveTextContent("1");
   });
 
   it("should increment counter when clicking the '+' button", () => {
-    render(<ProductLine />);
+    const product = { name: "Melon", category: "Eletrônicos", price: "$8" };
+    render(<ProductLine product={product} />);
     const incrementButton = screen.getByLabelText("Botão de incremento");
     const counterElement = screen.getByTestId("product-line__counter");
 
@@ -21,7 +23,8 @@ describe("ProductLine", () => {
   });
 
   it("should decrement counter when clicking the '-' button", () => {
-    render(<ProductLine />);
+    const product = { name: "Melon", category: "Eletrônicos", price: "$8" };
+    render(<ProductLine product={product} />);
     const decrementButton = screen.getByLabelText("Botão de decremento");
     const counterElement = screen.getByTestId("product-line__counter");
 
@@ -31,7 +34,8 @@ describe("ProductLine", () => {
   });
 
   it("should not decrement counter below 1", () => {
-    render(<ProductLine />);
+    const product = { name: "Melon", category: "Eletrônicos", price: "$8" };
+    render(<ProductLine product={product} />);
     const decrementButton = screen.getByLabelText("Botão de decremento");
     const counterElement = screen.getByTestId("product-line__counter");
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import Cashier from '.';
 import formatDate from '../../utils/formatDate';
 
@@ -19,5 +19,18 @@ describe('Cashier', () => {
   it('should render correctly', () => {
     render(<Cashier />);
     expect(screen.getByText(/Nova venda/i)).toBeInTheDocument();
+  });
+
+  it('should add selected product to the cart when ProductCard is clicked', () => {
+    render(<Cashier />);
+    const productCard = screen.getByText('Melon');
+
+    expect(screen.queryAllByTestId('product-line')).toHaveLength(0);
+
+    fireEvent.click(productCard);
+
+    const productLines = screen.getAllByTestId('product-line');
+    expect(productLines).toHaveLength(1);
+    expect(productLines[0]).toHaveTextContent('Melon');
   });
 });

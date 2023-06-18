@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import formatDate from '../../utils/formatDate';
 import ProductGrid from '../../Components/Organisms/ProductGrid';
@@ -11,6 +11,22 @@ import ProductLine from '../../Components/Molecules/ProductLine';
 
 export default function Cashier() {
   const currentDate = formatDate(new Date())
+  const [selectedProducts, setSelectedProducts] = useState([]);
+
+  const handleProductClick = (product) => {
+    setSelectedProducts((prevSelectedProducts) => [...prevSelectedProducts, product]);
+  }
+
+  const mockProducts = [
+    {name: 'Phone', category: 'Eletrônicos', price: '$12'},
+    {name: 'Leggins', category: 'Roupas', price: '$8'},
+    {name: 'Melon', category: 'Alimentos', price: '$8'},
+    {name: 'Mouse', category: 'Eletrônicos', price: '$12'},
+    {name: 'T-shirt', category: 'Roupas', price: '$5'},
+    {name: 'Hat', category: 'Roupas', price: '$5'},
+    {name: 'Banana', category: 'Alimentos', price: '$8'},
+    {name: 'Keyboard', category: 'Eletrônicos', price: '$12'},
+  ]
 
   return (
     <main className='Cashier Container'>
@@ -20,21 +36,15 @@ export default function Cashier() {
           <time>{currentDate}</time>
         </header>
         <ProductGrid>
-          <ProductCard product={{name: 'Melon', category: 'Eletrônicos'}} />
-          <ProductCard product={{name: 'Melon', category: 'Roupas'}} />
-          <ProductCard product={{name: 'Melon', category: 'Alimentos'}} />
-          <ProductCard product={{name: 'Melon', category: 'Eletrônicos'}} />
-          <ProductCard product={{name: 'Melon', category: 'Roupas'}} />
-          <ProductCard product={{name: 'Melon', category: 'Roupas'}} />
-          <ProductCard product={{name: 'Melon', category: 'Alimentos'}} />
-          <ProductCard product={{name: 'Melon', category: 'Eletrônicos'}} />
+          {mockProducts.map((product) => (
+            <ProductCard key={product.name} onClick={() => handleProductClick(product)} product={product} />
+          ))}
         </ProductGrid>
       </section>
       <Cart>
-        <ProductLine />
-        <ProductLine />
-        <ProductLine />
-        <ProductLine />
+        {selectedProducts.map((product) => (
+          <ProductLine key={product.name} product={product}/>
+        ))}
       </Cart>
     </main>
   )
