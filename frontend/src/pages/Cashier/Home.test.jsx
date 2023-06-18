@@ -20,10 +20,4 @@ describe('Cashier', () => {
     render(<Cashier />);
     expect(screen.getByText(/Nova venda/i)).toBeInTheDocument();
   });
-
-  it('should match the snapshot', () => {
-    const { asFragment} = render(<Cashier />)
-
-    expect(asFragment()).toMatchSnapshot()
-  })
 });

@@ -1,9 +1,12 @@
 import React from 'react';
 
 import formatDate from '../../utils/formatDate';
-import Product from '../../Components/Molecules/ProductCard';
+import ProductGrid from '../../Components/Organisms/ProductGrid';
+
 import '../../styles/container.scss'
 import './index.scss';
+import ProductCard from '../../Components/Molecules/ProductCard';
+
 
 
 export default function Cashier() {
@@ -15,7 +18,16 @@ export default function Cashier() {
         <h1>Nova venda</h1>
         <time>{currentDate}</time>
       </header>
-      <Product />
+      <ProductGrid>
+        <ProductCard />
+        <ProductCard />
+        <ProductCard />
+        <ProductCard />
+        <ProductCard />
+        <ProductCard />
+        <ProductCard />
+        <ProductCard />
+      </ProductGrid>
     </main>
   )
 }

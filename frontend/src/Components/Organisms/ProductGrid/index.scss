@@ -1,0 +1,7 @@
+@import '../../../styles/variables.scss';
+
+.ProductGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: map-get($map: $spacing, $key: lg);
+}
