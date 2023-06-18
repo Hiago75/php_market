@@ -1,15 +1,16 @@
 import React from "react";
 import Button from "../../Atoms/Button";
-import './index.scss'
 import Price from "../../Atoms/Price";
+import CircleButton from "../../Atoms/CircleButton";
 
+import './index.scss'
 
 export default function Cart({ children }) {
   return (
     <aside data-testid="cart" className="Cart">
       <header>
         <h2>Carrinho</h2>
-        <button>X</button>
+        <CircleButton>X</CircleButton>
       </header>
 
       <ul>

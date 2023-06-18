@@ -3,6 +3,13 @@
 .ProductCard {
   background-color: $white;
   border-radius: 20px;
+  cursor: pointer;
+
+  &:hover {
+    .ProductCard-icon__figure {
+      fill: $light-blue;
+    }
+  }
 
   &-icon {
     display: flex;
@@ -17,6 +24,7 @@
     &__figure {
       width: 100%;
       height: 60%;
+      transition: .3s ease;
     }
   }
 
