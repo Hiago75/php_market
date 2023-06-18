@@ -1,26 +1,46 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
 import ProductCard from './';
 
-describe('ProductCard', () => {
-  const product = {
-    name: 'Example Product',
-    category: 'Example Category'
-  };
+jest.mock('../../Atoms/Icon', () => ({ icon, className }) => (
+  <div data-testid="mock-icon" className={className}>
+    Mock Icon Component ({icon})
+  </div>
+));
 
-  test('renders product card component with correct name and category', () => {
-    render(<ProductCard product={product} />);
-    const productCardElement = screen.getByTestId('product-card');
-    const nameElement = screen.getByText(product.name);
-    const categoryElement = screen.getByText(product.category);
-    expect(productCardElement).toBeInTheDocument();
-    expect(nameElement).toBeInTheDocument();
-    expect(categoryElement).toBeInTheDocument();
+jest.mock('../../../utils/productTypeIconMap', () => ({
+  productTypeIconMap: {
+    'Product Category': 'mock-icon-name',
+  },
+}));
+
+describe('ProductCard', () => {
+  test('renders product name and category', () => {
+    const mockProduct = {
+      name: 'Product Name',
+      category: 'Product Category',
+    };
+
+    render(<ProductCard product={mockProduct} />);
+    const productNameElement = screen.getByText(mockProduct.name);
+    const productCategoryElement = screen.getByText(mockProduct.category);
+
+    expect(productNameElement).toBeInTheDocument();
+    expect(productCategoryElement).toBeInTheDocument();
   });
 
-  test('renders product card component with correct className', () => {
-    render(<ProductCard product={product} />);
-    const productCardElement = screen.getByTestId('product-card');
-    expect(productCardElement).toHaveClass('ProductCard');
+  test('renders the correct icon based on the product category', () => {
+    const mockProduct = {
+      name: 'Product Name',
+      category: 'Product Category',
+    };
+
+    render(<ProductCard product={mockProduct} />);
+    const iconElement = screen.getByTestId('mock-icon');
+
+    expect(iconElement).toBeInTheDocument();
+    expect(iconElement).toHaveClass('ProductCard-icon__figure');
+    expect(iconElement).toHaveTextContent('Mock Icon Component (mock-icon-name)');
   });
 });
