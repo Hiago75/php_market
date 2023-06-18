@@ -8,7 +8,7 @@
     display: inline-block;
     height: 200px;
     width: 100%;
-    box-shadow: 0px 49px 45px -11px rgba(245, 247, 251, 1);
+    box-shadow: $bottom-shadow;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
   }

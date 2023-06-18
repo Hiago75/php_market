@@ -6,28 +6,47 @@ import ProductGrid from '../../Components/Organisms/ProductGrid';
 import '../../styles/container.scss'
 import './index.scss';
 import ProductCard from '../../Components/Molecules/ProductCard';
-
-
+import Cart from '../../Components/Organisms/Cart';
 
 export default function Cashier() {
   const currentDate = formatDate(new Date())
 
   return (
     <main className='Cashier Container'>
-      <header className='Cashier-header'>
-        <h1>Nova venda</h1>
-        <time>{currentDate}</time>
-      </header>
-      <ProductGrid>
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-      </ProductGrid>
+      <section>
+        <header className='Cashier-header'>
+          <h1>Nova venda</h1>
+          <time>{currentDate}</time>
+        </header>
+        <ProductGrid>
+          <ProductCard />
+          <ProductCard />
+          <ProductCard />
+          <ProductCard />
+          <ProductCard />
+          <ProductCard />
+          <ProductCard />
+          <ProductCard />
+        </ProductGrid>
+      </section>
+      <Cart>
+        <li>
+          <h3>Melon</h3>
+          <p>$8</p>
+        </li>
+        <li>
+          <h3>Melon</h3>
+          <p>$8</p>
+        </li>
+        <li>
+          <h3>Melon</h3>
+          <p>$8</p>
+        </li>
+        <li>
+          <h3>Melon</h3>
+          <p>$8</p>
+        </li>
+      </Cart>
     </main>
   )
 }

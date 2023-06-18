@@ -1,6 +1,10 @@
 @import '../../styles/variables.scss';
 
 .Cashier {
+  display: grid;
+  grid-template-columns: .7fr .3fr;
+  gap: map-get($map: $spacing, $key: lg);
+
   &-header {
     width: 100%;
     display: flex;
@@ -17,4 +21,6 @@
       font-size: map-get($font-sizes, base);
     }
   }
+
+  aside {}
 }
