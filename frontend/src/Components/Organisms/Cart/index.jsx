@@ -23,7 +23,7 @@ export default function Cart({ selectedProducts, setSelectedProducts }) {
 
       const calculatedTaxes = selectedProducts.reduce(
         (accumulator, product) => {
-          const taxesPercentage = product.taxesPercentage || 0;
+          const taxesPercentage = product.tax_percentage || 0;
           const taxesAmount =
             (product.price * taxesPercentage * product.quantity) / 100;
           return accumulator + taxesAmount;
