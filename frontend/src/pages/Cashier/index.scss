@@ -10,6 +10,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: map-get($map: $spacing, $key: lg);
 
     h1 {
       color: $slat-blue;
