@@ -6,17 +6,19 @@ import { productTypeIconMap } from "../../../utils/productTypeIconMap";
 
 import './index.scss';
 
-export default function ProductLine({ product }) {
+export default function ProductLine({ product, onIncrement, onDecrement }) {
   const iconName = productTypeIconMap[product.category]
-  const [counter, setCounter] = useState(1);
+  const [counter, setCounter] = useState(product.quantity);
 
   const handleIncrement = () => {
     setCounter((prevCounter) => prevCounter + 1);
+    onIncrement(product);
   };
 
   const handleDecrement = () => {
     if (counter > 1) {
       setCounter((prevCounter) => prevCounter - 1);
+      onDecrement(product)
     }
   };
 

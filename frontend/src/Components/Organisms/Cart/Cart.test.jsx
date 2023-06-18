@@ -1,30 +1,67 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import Cart from './';
+import React from "react";
+import { fireEvent, render, screen } from "@testing-library/react";
+import Cart from "./";
 
-describe('Cart', () => {
-  it('should render the cart with header, items, and footer', () => {
+describe("Cart", () => {
+
+
+  it("should render Cart component with selected products", () => {
+    const selectedProducts = [
+      { name: "Phone", category: "Eletrônicos", price: 12, taxesPercentage: 12, quantity: 2 },
+      { name: "Leggins", category: "Roupas", price: 8, taxesPercentage: 8, quantity: 3 },
+      { name: "Melon", category: "Alimentos", price: 8, taxesPercentage: 5, quantity: 1 },
+    ];
+
     render(
-      <Cart>
-        <li>Item 1</li>
-        <li>Item 2</li>
-      </Cart>
+      <Cart
+        selectedProducts={selectedProducts}
+        setSelectedProducts={jest.fn()}
+      />
     );
 
-    const cartElement = screen.getByTestId('cart');
-    const headerElement = screen.getByText('Carrinho');
-    const items = screen.getAllByRole('listitem');
-    const footerElement = screen.getByTestId('cart-footer');
-
+    const cartElement = screen.getByTestId("cart");
     expect(cartElement).toBeInTheDocument();
-    expect(headerElement).toBeInTheDocument();
-    expect(items.length).toBe(2);
-    expect(footerElement).toBeInTheDocument();
+
+    const productLineElements = screen.getAllByTestId("product-line");
+    expect(productLineElements.length).toBe(selectedProducts.length);
   });
 
-  it('should render the cart without items', () => {
-    render(<Cart />);
-    const cartElement = screen.getByTestId('cart');
-    expect(cartElement).toBeInTheDocument();
+  it("should handle incrementing product quantity", () => {
+    const selectedProducts  = [
+      { name: "Phone", category: "Eletrônicos", price: 12, quantity: 2, taxesPercentage: 12 }];
+    const setSelectedProducts = jest.fn();
+    
+    render(
+      <Cart selectedProducts={selectedProducts} setSelectedProducts={setSelectedProducts} />
+    );
+
+    const incrementButton = screen.getByLabelText("Botão de incremento");
+    fireEvent.click(incrementButton);
+
+    const updatedProducts = [
+      { name: "Phone", category: "Eletrônicos", price: 12, quantity: 3, taxesPercentage: 12 }];
+
+    expect(setSelectedProducts).toHaveBeenCalledWith(updatedProducts);
   });
+
+  it("should handle decrementing product quantity", () => {
+    const setSelectedProducts = jest.fn();
+    const selectedProducts = [
+      { name: "Phone", category: "Eletrônicos", price: 12, quantity: 2, taxesPercentage: 12 },
+    ];
+
+    render(
+      <Cart selectedProducts={selectedProducts} setSelectedProducts={setSelectedProducts} />
+    );
+
+    const decrementButton = screen.getByLabelText("Botão de decremento");
+    fireEvent.click(decrementButton);
+
+    const updatedProducts = [
+      { name: "Phone", category: "Eletrônicos", price: 12, quantity: 1, taxesPercentage: 12 },
+    ];
+
+    expect(setSelectedProducts).toHaveBeenCalledWith(updatedProducts);
+  });
+
 });

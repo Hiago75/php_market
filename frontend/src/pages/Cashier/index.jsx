@@ -7,27 +7,43 @@ import '../../styles/container.scss'
 import './index.scss';
 import ProductCard from '../../Components/Molecules/ProductCard';
 import Cart from '../../Components/Organisms/Cart';
-import ProductLine from '../../Components/Molecules/ProductLine';
+
+
+const mockProducts = [
+  {name: 'Phone', category: 'Eletrônicos', price: 12 , taxesPercentage: '12'},
+  {name: 'Leggins', category: 'Roupas', price: 8, taxesPercentage: 8},
+  {name: 'Melon', category: 'Alimentos', price: 8, taxesPercentage: 5},
+  {name: 'Mouse', category: 'Eletrônicos', price: 12, taxesPercentage: 12},
+  {name: 'T-shirt', category: 'Roupas', price: 5, taxesPercentage: 12},
+  {name: 'Hat', category: 'Roupas', price: 5, taxesPercentage: 8},
+  {name: 'Banana', category: 'Alimentos', price: 8, taxesPercentage: 5},
+  {name: 'Keyboard', category: 'Eletrônicos', price: 12, taxesPercentage: 12},
+]
+
 
 export default function Cashier() {
   const currentDate = formatDate(new Date())
   const [selectedProducts, setSelectedProducts] = useState([]);
 
   const handleProductClick = (product) => {
-    setSelectedProducts((prevSelectedProducts) => [...prevSelectedProducts, product]);
-  }
+    const isProductSelected = selectedProducts.some(
+      (selectedProduct) => selectedProduct.name === product.name
+    );
+  
+    if (!isProductSelected) {
+      const productWithQuantity = {
+        ...product,
+        quantity: 1, 
+      };
 
-  const mockProducts = [
-    {name: 'Phone', category: 'Eletrônicos', price: '$12'},
-    {name: 'Leggins', category: 'Roupas', price: '$8'},
-    {name: 'Melon', category: 'Alimentos', price: '$8'},
-    {name: 'Mouse', category: 'Eletrônicos', price: '$12'},
-    {name: 'T-shirt', category: 'Roupas', price: '$5'},
-    {name: 'Hat', category: 'Roupas', price: '$5'},
-    {name: 'Banana', category: 'Alimentos', price: '$8'},
-    {name: 'Keyboard', category: 'Eletrônicos', price: '$12'},
-  ]
-
+      setSelectedProducts((prevSelectedProducts) => [
+        ...prevSelectedProducts,
+        productWithQuantity,
+      ]);
+    }
+  };
+  
+  
   return (
     <main className='Cashier Container'>
       <section>
@@ -41,11 +57,8 @@ export default function Cashier() {
           ))}
         </ProductGrid>
       </section>
-      <Cart>
-        {selectedProducts.map((product) => (
-          <ProductLine key={product.name} product={product}/>
-        ))}
-      </Cart>
+
+      <Cart selectedProducts={selectedProducts} setSelectedProducts={setSelectedProducts} />
     </main>
   )
 }

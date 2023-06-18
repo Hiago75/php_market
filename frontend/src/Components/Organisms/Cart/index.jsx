@@ -1,12 +1,63 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import Button from "../../Atoms/Button";
 import Price from "../../Atoms/Price";
 import CircleButton from "../../Atoms/CircleButton";
+import ProductLine from "../../Molecules/ProductLine";
 
 import './index.scss'
 
-export default function Cart({ children }) {
+
+export default function Cart({ selectedProducts, setSelectedProducts }) {
+  const [subTotal, setSubTotal] = useState(0);
+  const [taxes, setTaxes] = useState(0);
+  const [total, setTotal] = useState(0);
+
+  useEffect(() => {
+    const calculateTotals = () => {
+      const calculatedSubTotal = selectedProducts.reduce(
+        (accumulator, product) =>
+          accumulator + product.price * product.quantity,
+        0
+      );
+
+      const calculatedTaxes = selectedProducts.reduce(
+        (accumulator, product) => {
+          const taxesPercentage = product.taxesPercentage || 0;
+          const taxesAmount =
+            (product.price * taxesPercentage * product.quantity) / 100;
+          return accumulator + taxesAmount;
+        },
+        0
+      );
+
+      const calculatedTotal = calculatedSubTotal + calculatedTaxes;
+
+      setSubTotal(calculatedSubTotal.toFixed(2));
+      setTaxes(calculatedTaxes.toFixed(2));
+      setTotal(calculatedTotal.toFixed(2));
+    };
+
+    calculateTotals();
+  }, [selectedProducts]);
+
+  const handleIncrementProduct = (product) => {
+    const updatedProducts = selectedProducts.map((p) =>
+      p === product ? { ...p, quantity: p.quantity + 1 } : p
+    );
+    
+    setSelectedProducts(updatedProducts);
+  };
+
+  const handleDecrementProduct = (product) => {
+    const updatedProducts = selectedProducts.map((p) =>
+      p === product && p.quantity > 1 ? { ...p, quantity: p.quantity - 1 } : p
+    );
+    
+    setSelectedProducts(updatedProducts);
+  };
+
+
   return (
     <aside data-testid="cart" className="Cart">
       <header>
@@ -15,14 +66,21 @@ export default function Cart({ children }) {
       </header>
 
       <ul>
-        {children}
+      {selectedProducts.map((product) => (
+          <ProductLine 
+            onIncrement={handleIncrementProduct} 
+            onDecrement={handleDecrementProduct} 
+            key={product.name} 
+            product={product}
+          />
+        ))}
       </ul>
 
       <footer data-testid="cart-footer">
-        <Price label="Sub-total">43</Price>
-        <Price label="Impostos">2</Price>
+        <Price label="Sub-total">{subTotal}</Price>
+        <Price label="Impostos">{taxes}</Price>
         <br />
-        <Price label="Total">45</Price>
+        <Price label="Total">{total}</Price>
         <br />
         <Button>Finalizar compra</Button>
       </footer>
