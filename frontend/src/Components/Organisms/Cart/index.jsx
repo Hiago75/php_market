@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "../../Atoms/Button";
 import './index.scss'
+import Price from "../../Atoms/Price";
 
 
 export default function Cart({ children }) {
@@ -16,9 +17,11 @@ export default function Cart({ children }) {
       </ul>
 
       <footer>
-        Sub Total: $43
-        Tax: $2
-        Total: $45;
+        <Price label="Sub-total">43</Price>
+        <Price label="Impostos">2</Price>
+        <br />
+        <Price label="Total">45</Price>
+        <br />
         <Button>Finalizar compra</Button>
       </footer>
     </aside>
