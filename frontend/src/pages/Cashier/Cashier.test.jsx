@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import Cashier from './';
+import Cashier from '.';
 import formatDate from '../../utils/formatDate';
 
 jest.mock('../../utils/formatDate');
