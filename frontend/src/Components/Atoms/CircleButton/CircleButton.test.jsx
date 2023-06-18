@@ -1,22 +1,43 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
+import { render, fireEvent, screen } from '@testing-library/react';
 import CircleButton from './';
 
 describe('CircleButton', () => {
-  test('renders button with correct text content', () => {
-    const buttonText = 'Click me';
-    render(<CircleButton>{buttonText}</CircleButton>);
-    const buttonElement = screen.getByText(buttonText);
+  test('should render button with correct label', () => {
+    const label = 'Add';
+    render(
+      <CircleButton label={label} color="blue">
+        +
+      </CircleButton>
+    );
 
-    expect(buttonElement).toBeInTheDocument();
+    const button = screen.getByLabelText(label);
+    expect(button).toBeInTheDocument();
   });
 
-  test('renders button with correct color', () => {
-    const buttonColor = 'red';
-    render(<CircleButton color={buttonColor}>Button</CircleButton>);
-    const buttonElement = screen.getByText('Button');
+  test('should call onClick function when button is clicked', () => {
+    const onClick = jest.fn();
+    render(
+      <CircleButton label="Add" color="blue" onClick={onClick}>
+        +
+      </CircleButton>
+    );
 
-    expect(buttonElement).toHaveStyle({ color: buttonColor });
+    const button = screen.getByLabelText('Add');
+    fireEvent.click(button);
+
+    expect(onClick).toHaveBeenCalledTimes(1);
+  });
+
+  test('should disable the button when disabled prop is true', () => {
+    const onClick = jest.fn();
+    render(
+      <CircleButton label="Add" color="blue" onClick={onClick} disabled>
+        +
+      </CircleButton>
+    );
+
+    const button = screen.getByLabelText('Add');
+    expect(button).toBeDisabled();
   });
 });

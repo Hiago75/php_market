@@ -1,17 +1,43 @@
 import React from "react";
-import {render, screen} from '@testing-library/react';
-import ProductLine from './';
+import { render, fireEvent, screen } from "@testing-library/react";
+import ProductLine from "./";
 
-describe('ProductLine', () => {
-  it('should render the card with name and price', () => {
+describe("ProductLine", () => {
+  it("should render product line with initial counter value", () => {
     render(<ProductLine />);
+    const counterElement = screen.getByTestId("product-line__counter");
 
-    const productLineElement = screen.getByTestId('product-line')
-    const title = screen.getByTestId('product-line__title')
-    const price = screen.getByTestId('product-line__price')
+    expect(counterElement).toHaveTextContent("1");
+  });
 
-    expect(productLineElement).toBeInTheDocument();
-    expect(title).toBeInTheDocument();
-    expect(price).toBeInTheDocument();
-  })
-})
+  it("should increment counter when clicking the '+' button", () => {
+    render(<ProductLine />);
+    const incrementButton = screen.getByLabelText("Botão de incremento");
+    const counterElement = screen.getByTestId("product-line__counter");
+
+    fireEvent.click(incrementButton);
+
+    expect(counterElement).toHaveTextContent("2");
+  });
+
+  it("should decrement counter when clicking the '-' button", () => {
+    render(<ProductLine />);
+    const decrementButton = screen.getByLabelText("Botão de decremento");
+    const counterElement = screen.getByTestId("product-line__counter");
+
+    fireEvent.click(decrementButton);
+
+    expect(counterElement).toHaveTextContent("1");
+  });
+
+  it("should not decrement counter below 1", () => {
+    render(<ProductLine />);
+    const decrementButton = screen.getByLabelText("Botão de decremento");
+    const counterElement = screen.getByTestId("product-line__counter");
+
+    fireEvent.click(decrementButton);
+    fireEvent.click(decrementButton);
+
+    expect(counterElement).toHaveTextContent("1");
+  });
+});

@@ -9,4 +9,9 @@
   font-size: 20px;
   color: #fc4444;
   cursor: pointer;
+
+  &:disabled {
+    color: $cadet-blue;
+    cursor: not-allowed;
+  }
 }
