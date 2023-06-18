@@ -31,7 +31,7 @@ export default function ProductLine({ product, onIncrement, onDecrement }) {
         
         <div className="ProductLine-info">
           <h3 data-testid="product-line__title">{product.name}</h3>
-          <p data-testid="product-line__price">{product.price}</p>
+          <p data-testid="product-line__price">R${product.price}</p>
         </div>
       </div>
 
