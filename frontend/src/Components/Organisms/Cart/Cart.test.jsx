@@ -14,7 +14,7 @@ describe('Cart', () => {
     const cartElement = screen.getByTestId('cart');
     const headerElement = screen.getByText('Carrinho');
     const items = screen.getAllByRole('listitem');
-    const footerElement = screen.getByText(/Sub Total:/);
+    const footerElement = screen.getByTestId('cart-footer');
 
     expect(cartElement).toBeInTheDocument();
     expect(headerElement).toBeInTheDocument();

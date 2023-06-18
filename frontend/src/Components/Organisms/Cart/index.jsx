@@ -16,7 +16,7 @@ export default function Cart({ children }) {
         {children}
       </ul>
 
-      <footer>
+      <footer data-testid="cart-footer">
         <Price label="Sub-total">43</Price>
         <Price label="Impostos">2</Price>
         <br />
