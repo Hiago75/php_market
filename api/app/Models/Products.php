@@ -16,9 +16,9 @@ class Products
     public function getAll()
     {
         $query = 'SELECT products.*, product_types.name AS type_name, taxes.percentage AS tax_percentage
-          FROM products
-          JOIN product_types ON products.type_id = product_types.id
-          JOIN taxes ON product_types.id = taxes.type_id';
+            FROM products
+            JOIN product_types ON products.type_id = product_types.id
+            JOIN taxes ON product_types.id = taxes.type_id';
 
         return $this->db->executeQuery($query);;
     }

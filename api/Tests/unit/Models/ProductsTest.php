@@ -39,7 +39,10 @@ class ProductsTest extends TestCase
 
         $this->dbMock->expects($this->once())
             ->method('executeQuery')
-            ->with('SELECT * FROM products')
+            ->with('SELECT products.*, product_types.name AS type_name, taxes.percentage AS tax_percentage
+            FROM products
+            JOIN product_types ON products.type_id = product_types.id
+            JOIN taxes ON product_types.id = taxes.type_id')
             ->willReturn($expectedResult);
 
         $result = $this->products->getAll();
@@ -71,10 +74,10 @@ class ProductsTest extends TestCase
 
         $this->dbMock->expects($this->once())
             ->method('executeQuery')
-            ->with('SELECT * FROM products')
+            ->with('SELECT * FROM products WHERE id = ?')
             ->willReturn($expectedResult);
         
-        $result = $this->products->getAll();
+        $result = $this->products->getById('1');
         
         $this->assertEquals($expectedResult, $result);
     }
