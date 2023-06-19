@@ -20,6 +20,15 @@ if (empty($urlParts)) {
     die();
 }
 
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    header("Access-Control-Allow-Origin: *");
+    header("Access-Control-Allow-Methods: POST, OPTIONS");
+    header("Access-Control-Allow-Headers: Content-Type, Authorization");
+    http_response_code(200);
+    exit();
+}
+
+
 $itemName = $urlParts[0];
 $capitalizedParameter = ucwords(str_replace('-', ' ', $itemName));
 $formatedParameter = str_replace(' ', '', $capitalizedParameter);
@@ -46,9 +55,10 @@ $controller = new $controllerClass($service);
 $httpMethod = $_SERVER['REQUEST_METHOD'];
 $methodName = strtolower($httpMethod);
 $entityBody = json_decode(file_get_contents('php://input'), true);
+
 header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
-header("Access-Control-Allow-Headers: Content-Type, Authorization");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+header("Access-Control-Allow-Headers: X-Requested-With, Content-Type, Accept, Origin, Authorization");
 
 if ($httpMethod === 'GET') {
     $id = isset($urlParts[1]) ? $urlParts[1] : null;
