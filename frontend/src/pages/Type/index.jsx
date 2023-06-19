@@ -15,8 +15,9 @@ export default function Type() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    // TODO: refactor
     try {
-      const typeResponse = await fetch('http://localhost:8080/types', {
+      const typeResponse = await fetch('http://localhost:8080/product-type', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -29,7 +30,7 @@ export default function Type() {
       }
 
       const newType = await typeResponse.json();
-      const typeId = newType.id;
+      const typeId = newType.data.id;
 
       const taxResponse = await fetch('http://localhost:8080/taxes', {
         method: 'POST',
@@ -39,12 +40,12 @@ export default function Type() {
         body: JSON.stringify({ type_id: typeId, percentage }),
       });
 
+      setName('');
+      setPercentage('');
+
       if (!taxResponse.ok) {
         throw new Error('Failed to create tax');
       }
-
-      setName('');
-      setPercentage('');
 
       console.log('Type and tax created successfully!');
     } catch (error) {
