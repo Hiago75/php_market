@@ -40,7 +40,7 @@ export default function Cashier() {
   const products = data.data
 
   return (
-    <main className='Cashier Container'>
+    <section className='Cashier Container'>
       <section>
         <header className='Cashier-header'>
           <h1>Nova venda</h1>
@@ -54,6 +54,6 @@ export default function Cashier() {
       </section>
 
       <Cart selectedProducts={selectedProducts} setSelectedProducts={setSelectedProducts} />
-    </main>
+    </section>
   )
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { createBrowserRouter, RouterProvider, Link } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import Cashier from './pages/Cashier';
 import Product from './pages/Product';
@@ -23,10 +23,10 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <section className='Grid'>
+    <main className='Grid'>
       <Navigation />
 
       <RouterProvider router={router} />
-    </section>
+    </main>
   </React.StrictMode>,
 );
