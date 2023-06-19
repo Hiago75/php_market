@@ -1,0 +1,7 @@
+.Product {
+  &-form {
+    display: grid;
+    row-gap: 30px;
+    grid-template-rows: repeat(4, min-content);
+  }
+}

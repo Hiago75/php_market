@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import useFetchData from '../../hooks/useFetchData';
+import './index.scss';
 
 import '../../styles/container.scss'
 import Button from '../../Components/Atoms/Button';
 import Input from "../../Components/Molecules/Input";
+import Select from "../../Components/Molecules/Select";
 
 export default function Product() {
   const [name, setName] = useState('');
@@ -60,18 +62,13 @@ export default function Product() {
 
   return (
     <section className="Container">
-      <form onSubmit={handleSubmit}>
+      <div>1</div>
+      
+      <form className="Product-form" onSubmit={handleSubmit}>
         <Input placeholder="Nome" icon="GiPencil" type="text" id="name" value={name} onChange={handleNameChange} />
 
         <div>
-          <select data-testid="categoria" id="type" value={typeId} onChange={handleTypeChange}>
-            <option value="">Selecione um tipo</option>
-            {productTypes.map((type) => (
-              <option key={type.id} value={type.id}>
-                {type.name}
-              </option>
-            ))}
-          </select>
+          <Select options={productTypes} value={typeId} onChange={handleTypeChange} label="Selecione um tipo"/>
         </div>
 
         <Input label="Preço" icon="GiPriceTag" type="number" placeholder="Preço" id="price" value={price} onChange={handlePriceChange} />

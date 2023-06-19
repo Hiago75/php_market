@@ -1,6 +1,6 @@
 @import '../../../styles/variables.scss';
 
-.Input {
+.Select {
   position: relative;
 
   &-icon {
@@ -9,7 +9,7 @@
     left: 10px;
   }
 
-  input {
+  select {
     background-color: $white;
     padding: 20px;
     padding-left: 35px;
