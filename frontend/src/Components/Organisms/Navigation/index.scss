@@ -1,0 +1,31 @@
+@import '../../../styles/variables.scss';
+
+.Navigation {
+  writing-mode: vertical-lr;
+  text-orientation: mixed;
+  background-color: $light-blue;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+  padding: 30px 15px;
+
+  &-icon {
+    transform: rotate(90deg);
+    margin-bottom: 15px;
+  }
+
+  a {
+    color: $white;
+    text-decoration: none;
+    font-size: 20px;
+    display: inline-block;
+    padding: 20px;
+    border-radius: 20px;
+    transition: all .3s ease;
+    margin: 15px 0;
+
+    &:hover {
+      background-color: $white;
+      color: $light-blue;
+    }
+  }
+}

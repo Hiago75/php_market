@@ -57,7 +57,6 @@ export default function Cart({ selectedProducts, setSelectedProducts }) {
     setSelectedProducts(updatedProducts);
   };
 
-
   return (
     <aside data-testid="cart" className="Cart">
       <header>
@@ -82,7 +81,7 @@ export default function Cart({ selectedProducts, setSelectedProducts }) {
         <br />
         <Price label="Total">{total}</Price>
         <br />
-        <Button>Finalizar compra</Button>
+        <Button>Finalizar venda</Button>
       </footer>
     </aside>
   )

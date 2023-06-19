@@ -17,5 +17,6 @@ body,
 
 #root {
   padding: map-get($spacing, lg);
+  padding-left: 0;
   background-color: $dark-blue;
 }

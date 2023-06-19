@@ -7,3 +7,11 @@
   padding: map-get($spacing, lg);
   background-color: $dark-white;
 }
+
+.Grid {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  column-gap: map-get($spacing, lg)
+}
