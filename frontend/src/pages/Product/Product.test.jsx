@@ -22,9 +22,9 @@ describe('Product component', () => {
 
   it('should render form inputs', () => {
     render(<Product />);
-    const nameInput = screen.getByLabelText('Nome:');
-    const typeSelect = screen.getByLabelText('Tipo:');
-    const priceInput = screen.getByLabelText('Preço:');
+    const nameInput = screen.getByPlaceholderText('Nome');
+    const typeSelect = screen.getByTestId('categoria');
+    const priceInput = screen.getByPlaceholderText('Preço');
     const registerButton = screen.getByRole('button', { name: 'Registrar' });
 
     expect(nameInput).toBeInTheDocument();
@@ -35,13 +35,13 @@ describe('Product component', () => {
 
   it('should render product types in the select', () => {
     render(<Product />);
-    const typeSelect = screen.getByLabelText('Tipo:');
+    const typeSelect = screen.getByTestId('categoria');
 
     expect(typeSelect).toBeInTheDocument();
     expect(screen.getByText('Selecione um tipo')).toBeInTheDocument();
 
     const productTypes = screen.getAllByRole('option');
-    expect(productTypes).toHaveLength(4); // 3 types + default option
+    expect(productTypes).toHaveLength(4);
 
     expect(productTypes[1]).toHaveValue('1');
     expect(productTypes[1]).toHaveTextContent('Type 1');
@@ -53,9 +53,9 @@ describe('Product component', () => {
 
   it('should update state when input values change', () => {
     render(<Product />);
-    const nameInput = screen.getByLabelText('Nome:');
-    const typeSelect = screen.getByLabelText('Tipo:');
-    const priceInput = screen.getByLabelText('Preço:');
+    const nameInput = screen.getByPlaceholderText('Nome');
+    const typeSelect = screen.getByTestId('categoria');
+    const priceInput = screen.getByPlaceholderText('Preço');
 
     fireEvent.change(nameInput, { target: { value: 'New Product' } });
     fireEvent.change(typeSelect, { target: { value: '2' } });

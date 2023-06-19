@@ -1,0 +1,21 @@
+@import '../../../styles/variables.scss';
+
+.Input {
+  position: relative;
+
+  &-icon {
+    position: absolute;
+    top: 26px;
+    left: 10px;
+  }
+
+  input {
+    background-color: $white;
+    padding: 20px;
+    padding-left: 35px;
+    font-size: 1.125rem;
+    outline: 0;
+    border: 0;
+    border-radius: 30px;
+  }
+}

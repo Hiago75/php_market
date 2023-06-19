@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import useFetchData from '../../hooks/useFetchData';
 
 import '../../styles/container.scss'
+import Button from '../../Components/Atoms/Button';
+import Input from "../../Components/Molecules/Input";
 
 export default function Product() {
   const [name, setName] = useState('');
@@ -59,14 +61,10 @@ export default function Product() {
   return (
     <section className="Container">
       <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="name">Nome:</label>
-          <input type="text" id="name" value={name} onChange={handleNameChange} />
-        </div>
+        <Input placeholder="Nome" icon="GiPencil" type="text" id="name" value={name} onChange={handleNameChange} />
 
         <div>
-          <label htmlFor="type">Tipo:</label>
-          <select id="type" value={typeId} onChange={handleTypeChange}>
+          <select data-testid="categoria" id="type" value={typeId} onChange={handleTypeChange}>
             <option value="">Selecione um tipo</option>
             {productTypes.map((type) => (
               <option key={type.id} value={type.id}>
@@ -76,12 +74,8 @@ export default function Product() {
           </select>
         </div>
 
-        <div>
-          <label htmlFor="price">Preço:</label>
-          <input type="number" id="price" value={price} onChange={handlePriceChange} />
-        </div>
-
-        <button name="Registrar" type="submit">Registrar</button>
+        <Input label="Preço" icon="GiPriceTag" type="number" placeholder="Preço" id="price" value={price} onChange={handlePriceChange} />
+        <Button name="Registrar" type="submit">Registrar</Button>
       </form>
     </section>
   )
