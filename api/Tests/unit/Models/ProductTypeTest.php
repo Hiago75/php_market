@@ -40,18 +40,20 @@ class ProductTypeTest extends TestCase
 
     public function testSave()
     {
-        $id = 'abcdef123456';
-        $name = 'Test Product Type';
-
-        $query = 'INSERT INTO product_types (id, name) VALUES (?, ?)';
-        $params = [$id, $name];
-
-        $this->dbMock->expects($this->once())
-            ->method('executeQuery')
-            ->with($query, $params);
-
-        $result = $this->productType->save($id, $name);
-
-        $this->assertEquals('success', $result);
+        $pdoStatementMock = $this->createMock(PDOStatement::class);
+        $pdoStatementMock->method('fetchColumn')->willReturn('123');
+    
+        $pdoMock = $this->createMock(PDO::class);
+        $pdoMock->method('prepare')->willReturn($pdoStatementMock);
+        $pdoMock->method('lastInsertId')->willReturn('123');
+    
+        $this->dbMock->method('getPDO')->willReturn($pdoMock);
+    
+        $productType = new ProductType($this->dbMock);
+    
+        $result = $productType->save('123', 'Product 1');
+    
+        $this->assertEquals(['id' => '123'], $result);
     }
+    
 }

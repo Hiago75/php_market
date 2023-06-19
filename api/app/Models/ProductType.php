@@ -19,11 +19,15 @@ class ProductType
 
     public function save(string $id, string $name)
     {
-        $query = 'INSERT INTO product_types (id, name) VALUES (?, ?)';
+        $query = 'INSERT INTO product_types (id, name) VALUES (?, ?) RETURNING id, name';
         $params = [$id, $name];
+     
+        $pdo = $this->db->getPDO();
+        $stmt = $pdo->prepare($query);
+        $stmt->execute($params);
 
-        $this->db->executeQuery($query, $params);
+        $newItemId = $stmt->fetchColumn();
 
-        return 'success';
+        return ['id' => $newItemId];
     }
 }
