@@ -22,9 +22,17 @@ CREATE TABLE IF NOT EXISTS taxes (
 
 CREATE TABLE IF NOT EXISTS sales (
   id VARCHAR(96) PRIMARY KEY,
-  product_id VARCHAR(96) REFERENCES products(id),
-  quantity INT,
+  subtotal DECIMAL(10, 2),
+  taxes DECIMAL(10, 2),
+  total DECIMAL(10, 2),
   sale_date DATE
+);
+
+CREATE TABLE IF NOT EXISTS sale_items (
+  id VARCHAR(96) PRIMARY KEY,
+  sale_id VARCHAR(96) REFERENCES sales(id),
+  product_id VARCHAR(96) REFERENCES products(id),
+  quantity INT
 );
 
 --Popular a base
