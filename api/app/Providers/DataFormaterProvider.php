@@ -4,12 +4,25 @@ namespace App\Providers;
 
 class DataFormaterProvider
 {
+  private static function flattenArrayKeys($array)
+  {
+      $keys = [];
+  
+      foreach ($array as $key => $value) {
+          $keys[] = $key;
+      }
+  
+      return $keys;
+  }
+
   public static function verifyKeys($data, $requiredKeys)
   {
-    if (empty($data)) {
-      return false;
-    }
-
-    return count(array_intersect($requiredKeys, array_keys($data))) === count($requiredKeys);
+      if (empty($data)) {
+          return false;
+      }
+  
+      $keys = self::flattenArrayKeys($data);
+  
+      return count($keys) === count($requiredKeys);
   }
 }

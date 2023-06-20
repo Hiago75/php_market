@@ -25,6 +25,7 @@ class SalesServiceTest extends TestCase
     
     public function testSaveCallsModelSaveWithCorrectParameters()
     {
+        $products = [["id" => "1001"]];
         $saleDate = date('Y-m-d');
         $subtotal = 80.5;
         $taxes = 5;
@@ -33,10 +34,10 @@ class SalesServiceTest extends TestCase
 
         $this->salesModelMock->expects($this->once())
             ->method('save')
-            ->with($id, $subtotal, $taxes, $total, $saleDate)
+            ->with($products, $id, $subtotal, $taxes, $total, $saleDate)
             ->willReturn('Success');
 
-        $result = $this->salesService->save($subtotal, $taxes, $total);
+        $result = $this->salesService->save($products, $subtotal, $taxes, $total);
 
         $this->assertEquals('Success', $result);
     }
