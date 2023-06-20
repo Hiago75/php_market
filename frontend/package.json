@@ -44,6 +44,7 @@
   },
   "devDependencies": {
     "fetch-mock-jest": "^1.5.1",
-    "node-fetch": "^3.3.1"
+    "node-fetch": "^3.3.1",
+    "react-test-renderer": "^18.2.0"
   }
 }

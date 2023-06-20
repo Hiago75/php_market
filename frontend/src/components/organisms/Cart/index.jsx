@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 
-import Button from "../../atoms/Button";
-import Price from "../../atoms/Price";
-import CircleButton from "../../atoms/CircleButton";
-import ProductLine from "../../molecules/ProductLine";
+import Button from 'components/atoms/Button';
+import Price from 'components/atoms/Price';
+import CircleButton from 'components/atoms/CircleButton';
+import ProductLine from 'components/molecules/ProductLine';
 
 import './index.scss'
-
 
 export default function Cart({ selectedProducts, setSelectedProducts }) {
   const [subTotal, setSubTotal] = useState(0);
@@ -57,6 +56,31 @@ export default function Cart({ selectedProducts, setSelectedProducts }) {
     setSelectedProducts(updatedProducts);
   };
 
+  const handleSaleSubmit = async (event) => {
+    const response = await fetch('http://localhost:8080/sales', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        subTotal,
+        taxes,
+        total
+      })
+    })
+
+    if(!response) {
+      throw new Error('Failed to create sale');
+    }
+
+    setSelectedProducts([])
+    setSubTotal(0)
+    setTaxes(0)
+    setTotal(0)
+
+    console.log('Nova venda criada')
+  }
+
   return (
     <aside data-testid="cart" className="Cart">
       <header>
@@ -81,7 +105,7 @@ export default function Cart({ selectedProducts, setSelectedProducts }) {
         <br />
         <Price label="Total">{total}</Price>
         <br />
-        <Button>Finalizar venda</Button>
+        <Button name="Checkout" onClick={handleSaleSubmit}>Finalizar venda</Button>
       </footer>
     </aside>
   )

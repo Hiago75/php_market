@@ -20,13 +20,13 @@ class SalesController
 
   public function post($data)
   {
-    $requiredKeys = ['subtotal', 'taxes', 'total'];
+    $requiredKeys = ['subTotal', 'taxes', 'total'];
     $dataIsPresent = DataFormaterProvider::verifyKeys($data, $requiredKeys);
     
     if (!$dataIsPresent) {
       return 'Missing required fields';
     }
 
-    return $this->salesService->save($data['subtotal'], $data['taxes'], $data['total']);
+    return $this->salesService->save($data['subTotal'], $data['taxes'], $data['total']);
   }
 }
