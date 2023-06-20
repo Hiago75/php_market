@@ -4,4 +4,6 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: map-get($map: $spacing, $key: lg);
+  overflow-y: auto;
+  height: calc(100% - 90px)
 }
