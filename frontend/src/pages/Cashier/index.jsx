@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 
-import useFetchData from '../../hooks/useFetchData';
-import formatDate from '../../utils/formatDate';
-import ProductGrid from '../../Components/Organisms/ProductGrid';
-import ProductCard from '../../Components/Molecules/ProductCard';
-import Cart from '../../Components/Organisms/Cart';
+import useFetchData from 'hooks/useFetchData';
+import formatDate from 'utils/formatDate';
+import ProductGrid from 'Components/Organisms/ProductGrid';
+import ProductCard from 'Components/Molecules/ProductCard';
+import Cart from 'Components/Organisms/Cart';
 
-import '../../styles/container.scss'
+import 'styles/container.scss'
 import './index.scss';
 
 export default function Cashier() {
