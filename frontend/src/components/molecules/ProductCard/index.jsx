@@ -1,7 +1,7 @@
 import React from "react";
-import Icon from "../../Atoms/Icon";
+import Icon from "components/atoms/Icon";
 
-import {productTypeIconMap} from '..//../../utils/productTypeIconMap';
+import {productTypeIconMap} from 'utils/productTypeIconMap';
 
 import './index.scss';
 

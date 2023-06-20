@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Icon from "../../Atoms/Icon";
-import CircleButton from '../../Atoms/CircleButton';
+import Icon from "../../atoms/Icon";
+import CircleButton from '../../atoms/CircleButton';
 
 import { productTypeIconMap } from "../../../utils/productTypeIconMap";
 

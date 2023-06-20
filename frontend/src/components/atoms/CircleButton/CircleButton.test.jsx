@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
-import CircleButton from './';
+import CircleButton from '.';
 
 describe('CircleButton', () => {
   test('should render button with correct label', () => {

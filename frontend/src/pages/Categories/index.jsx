@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import Input from '../../Components/Molecules/Input';
-import Button from '../../Components/Atoms/Button';
+import Input from 'components/molecules/Input';
+import Button from 'components/atoms/Button';
 
 import './index.scss';
 

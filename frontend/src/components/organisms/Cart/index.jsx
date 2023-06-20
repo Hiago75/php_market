@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 
-import Button from "../../Atoms/Button";
-import Price from "../../Atoms/Price";
-import CircleButton from "../../Atoms/CircleButton";
-import ProductLine from "../../Molecules/ProductLine";
+import Button from "../../atoms/Button";
+import Price from "../../atoms/Price";
+import CircleButton from "../../atoms/CircleButton";
+import ProductLine from "../../molecules/ProductLine";
 
 import './index.scss'
 

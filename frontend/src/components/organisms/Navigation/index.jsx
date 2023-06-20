@@ -1,6 +1,6 @@
 import React from "react";
 
-import Icon from "../../Atoms/Icon";
+import Icon from "components/atoms/Icon";
 
 import './index.scss';
 

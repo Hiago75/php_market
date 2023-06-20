@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 
 import useFetchData from 'hooks/useFetchData';
 import formatDate from 'utils/formatDate';
-import ProductGrid from 'Components/Organisms/ProductGrid';
-import ProductCard from 'Components/Molecules/ProductCard';
-import Cart from 'Components/Organisms/Cart';
+import ProductGrid from 'components/organisms/ProductGrid';
+import ProductCard from 'components/molecules/ProductCard';
+import Cart from 'components/organisms/Cart';
 
 import 'styles/container.scss'
 import './index.scss';

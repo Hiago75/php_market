@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import useFetchData from '../../hooks/useFetchData';
-import './index.scss';
+import useFetchData from 'hooks/useFetchData';
 
-import '../../styles/container.scss'
-import Button from '../../Components/Atoms/Button';
-import Input from "../../Components/Molecules/Input";
-import Select from "../../Components/Molecules/Select";
+import Button from 'components/atoms/Button';
+import Input from "components/molecules/Input";
+import Select from "components/molecules/Select";
+
+import 'styles/container.scss'
+import './index.scss';
 
 export default function Product() {
   const [name, setName] = useState('');

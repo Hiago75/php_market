@@ -5,10 +5,10 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Cashier from './pages/Cashier';
 import Products from './pages/Products';
 import Categories from './pages/Categories';
+import Navigation from 'components/organisms/Navigation';
 
 import './styles/global.scss';
 import './styles/container.scss';
-import Navigation from './Components/Organisms/Navigation';
 
 const router = createBrowserRouter([
   {
