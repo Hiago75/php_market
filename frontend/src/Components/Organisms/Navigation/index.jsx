@@ -17,7 +17,7 @@ export default function Navigation() {
         Produtos
       </a>
 
-      <a href='/type'>
+      <a href='/categories'>
         <Icon icon="GiHighlighter" className="Navigation-icon" />
         Categorias
       </a>

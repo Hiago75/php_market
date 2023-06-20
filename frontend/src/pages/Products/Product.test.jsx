@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import Product from './';
+import Product from '.';
 import useFetchData from '../../hooks/useFetchData';
 
 jest.mock('../../hooks/useFetchData');

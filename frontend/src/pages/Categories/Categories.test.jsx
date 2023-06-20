@@ -1,9 +1,9 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import Type from './';
+import Categories from '.';
 
-describe('Type Component', () => {
+describe('Categories Component', () => {
   beforeEach(() => {
     jest.spyOn(global, 'fetch').mockResolvedValue({
       ok: true,
@@ -16,7 +16,7 @@ describe('Type Component', () => {
   });
 
   test('renders the component', () => {
-    render(<Type />);
+    render(<Categories />);
 
     const nameLabel = screen.getByLabelText('Name:');
     const percentageLabel = screen.getByLabelText('Percentage:');
@@ -30,7 +30,7 @@ describe('Type Component', () => {
   test('registers a new type with taxes', async () => {
     jest.spyOn(console, 'log').mockImplementation(() => {});
 
-    render(<Type />);
+    render(<Categories />);
 
     const nameInput = screen.getByLabelText('Name:');
     const percentageInput = screen.getByLabelText('Percentage:');
@@ -60,7 +60,7 @@ describe('Type Component', () => {
       ok: false,
     });
 
-    render(<Type />);
+    render(<Categories />);
 
     const nameInput = screen.getByLabelText('Name:');
     const percentageInput = screen.getByLabelText('Percentage:');

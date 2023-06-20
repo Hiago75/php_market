@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-export default function Type() {
+export default function Categories() {
   const [name, setName] = useState('');
   const [percentage, setPercentage] = useState('');
 

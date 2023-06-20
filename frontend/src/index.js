@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import Cashier from './pages/Cashier';
-import Product from './pages/Product';
-import Type from './pages/Type';
+import Products from './pages/Products';
+import Categories from './pages/Categories';
 
 import './styles/global.scss';
 import './styles/container.scss';
@@ -17,11 +17,11 @@ const router = createBrowserRouter([
   },
   {
     'path': '/products',
-    element: <Product />
+    element: <Products />
   },
   {
-    'path': '/type',
-    element: <Type />
+    'path': '/categories',
+    element: <Categories />
   }
 ])
 
