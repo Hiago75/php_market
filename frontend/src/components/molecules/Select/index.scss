@@ -3,6 +3,7 @@
 .Select {
   position: relative;
 
+
   &-icon {
     position: absolute;
     top: 26px;
@@ -18,5 +19,6 @@
     border: 0;
     border-radius: 30px;
     width: 100%;
+    box-shadow: $bottom-shadow;
   }
 }
