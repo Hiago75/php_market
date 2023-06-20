@@ -7,7 +7,7 @@ export default function Input({ label, icon, type, placeholder, id, value, onCha
   return(
     <div className="Input">
       <Icon className="Input-icon" icon={icon} />
-      <input aria-label={label} type={type} placeholder={placeholder} id={id} value={value} onChange={onChange} />
+      <input data-testid="input" aria-label={label} type={type} placeholder={placeholder} id={id} value={value} onChange={onChange} />
     </div>
   )
 }

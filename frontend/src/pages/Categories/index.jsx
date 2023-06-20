@@ -1,4 +1,8 @@
 import React, { useState } from 'react';
+import Input from '../../Components/Molecules/Input';
+import Button from '../../Components/Atoms/Button';
+
+import './index.scss';
 
 export default function Categories() {
   const [name, setName] = useState('');
@@ -55,20 +59,15 @@ export default function Categories() {
 
   return (
     <section className='Container'>
-      <div>
-        <h2>Register New Type with Taxes</h2>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor="name">Name:</label>
-            <input type="text" id="name" value={name} onChange={handleNameChange} />
-          </div>
-          <div>
-            <label htmlFor="percentage">Percentage:</label>
-            <input type="number" id="percentage" value={percentage} onChange={handlePercentageChange} />
-          </div>
-          <button type="submit">Register</button>
-        </form>
-      </div>
+      <h2>Register New Type with Taxes</h2>
+      
+      <form className='Categories-form' onSubmit={handleSubmit}>
+        <Input icon="GiPencil" type="text" placeholder="Nome" id="name" value={name} onChange={handleNameChange} />
+        
+        <Input icon="AiOutlinePercentage" placeholder="Porcentagem de impostos" type="number" id="percentage" value={percentage} onChange={handlePercentageChange} />
+
+        <Button name="Registrar" type="submit">Registrar</Button>
+      </form>
     </section>
   );
 }

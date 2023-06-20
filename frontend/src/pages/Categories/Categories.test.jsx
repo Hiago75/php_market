@@ -18,12 +18,12 @@ describe('Categories Component', () => {
   test('renders the component', () => {
     render(<Categories />);
 
-    const nameLabel = screen.getByLabelText('Name:');
-    const percentageLabel = screen.getByLabelText('Percentage:');
-    const registerButton = screen.getByRole('button', { name: 'Register' });
+    const nameInput = screen.getByPlaceholderText('Nome');
+    const percentageInput = screen.getByPlaceholderText('Porcentagem de impostos');
+    const registerButton = screen.getByRole('button', { name: 'Registrar' });
 
-    expect(nameLabel).toBeInTheDocument();
-    expect(percentageLabel).toBeInTheDocument();
+    expect(nameInput).toBeInTheDocument();
+    expect(percentageInput).toBeInTheDocument();
     expect(registerButton).toBeInTheDocument();
   });
 
@@ -32,9 +32,9 @@ describe('Categories Component', () => {
 
     render(<Categories />);
 
-    const nameInput = screen.getByLabelText('Name:');
-    const percentageInput = screen.getByLabelText('Percentage:');
-    const registerButton = screen.getByRole('button', { name: 'Register' });
+    const nameInput = screen.getByPlaceholderText('Nome');
+    const percentageInput = screen.getByPlaceholderText('Porcentagem de impostos');
+    const registerButton = screen.getByRole('button', { name: 'Registrar' });
 
     userEvent.type(nameInput, 'Test Type');
     userEvent.type(percentageInput, '10');
@@ -62,9 +62,9 @@ describe('Categories Component', () => {
 
     render(<Categories />);
 
-    const nameInput = screen.getByLabelText('Name:');
-    const percentageInput = screen.getByLabelText('Percentage:');
-    const registerButton = screen.getByRole('button', { name: 'Register' });
+    const nameInput = screen.getByPlaceholderText('Nome');
+    const percentageInput = screen.getByPlaceholderText('Porcentagem de impostos');
+    const registerButton = screen.getByRole('button', { name: 'Registrar' });
 
     userEvent.type(nameInput, 'Test Type');
     userEvent.type(percentageInput, '10');
