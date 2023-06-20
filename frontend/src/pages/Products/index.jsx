@@ -7,6 +7,7 @@ import Select from "components/molecules/Select";
 
 import 'styles/container.scss'
 import './index.scss';
+import Aside from "components/organisms/Aside/index";
 
 export default function Product() {
   const [name, setName] = useState('');
@@ -65,16 +66,18 @@ export default function Product() {
     <section className="Container">
       <div>1</div>
       
-      <form className="Product-form" onSubmit={handleSubmit}>
-        <Input placeholder="Nome" icon="GiPencil" type="text" id="name" value={name} onChange={handleNameChange} />
+      <Aside>
+        <form className="Product-form" onSubmit={handleSubmit}>
+          <Input placeholder="Nome" icon="GiPencil" type="text" id="name" value={name} onChange={handleNameChange} />
 
-        <div>
-          <Select options={productTypes} value={typeId} onChange={handleTypeChange} label="Selecione um tipo"/>
-        </div>
+          <div>
+            <Select options={productTypes} value={typeId} onChange={handleTypeChange} label="Selecione um tipo"/>
+          </div>
 
-        <Input label="Preço" icon="GiPriceTag" type="number" placeholder="Preço" id="price" value={price} onChange={handlePriceChange} />
-        <Button name="Registrar" type="submit">Registrar</Button>
-      </form>
+          <Input label="Preço" icon="GiPriceTag" type="number" placeholder="Preço" id="price" value={price} onChange={handlePriceChange} />
+          <Button name="Registrar" type="submit">Registrar</Button>
+        </form>
+      </Aside>
     </section>
   )
 }

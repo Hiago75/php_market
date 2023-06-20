@@ -1,0 +1,8 @@
+@import 'styles/variables';
+
+.Aside {
+  background-color: $white;
+  border-radius: 20px;
+  padding: map-get($map: $spacing, $key: lg);
+  max-height: calc(100vh - 120px);
+}

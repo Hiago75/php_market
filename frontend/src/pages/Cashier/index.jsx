@@ -8,6 +8,7 @@ import Cart from 'components/organisms/Cart';
 
 import 'styles/container.scss'
 import './index.scss';
+import Aside from 'components/organisms/Aside/index';
 
 export default function Cashier() {
   const currentDate = formatDate(new Date())
@@ -52,8 +53,10 @@ export default function Cashier() {
           ))}
         </ProductGrid>
       </section>
-
-      <Cart selectedProducts={selectedProducts} setSelectedProducts={setSelectedProducts} />
+      
+      <Aside>
+        <Cart selectedProducts={selectedProducts} setSelectedProducts={setSelectedProducts} />
+      </Aside>
     </section>
   )
 }

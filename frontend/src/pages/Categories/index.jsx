@@ -3,6 +3,7 @@ import Input from 'components/molecules/Input';
 import Button from 'components/atoms/Button';
 
 import './index.scss';
+import Aside from 'components/organisms/Aside/index';
 
 export default function Categories() {
   const [name, setName] = useState('');
@@ -61,13 +62,15 @@ export default function Categories() {
     <section className='Container'>
       <h2>Register New Type with Taxes</h2>
       
-      <form className='Categories-form' onSubmit={handleSubmit}>
-        <Input icon="GiPencil" type="text" placeholder="Nome" id="name" value={name} onChange={handleNameChange} />
-        
-        <Input icon="AiOutlinePercentage" placeholder="Porcentagem de impostos" type="number" id="percentage" value={percentage} onChange={handlePercentageChange} />
+      <Aside>
+        <form className='Categories-form' onSubmit={handleSubmit}>
+          <Input icon="GiPencil" type="text" placeholder="Nome" id="name" value={name} onChange={handleNameChange} />
+          
+          <Input icon="AiOutlinePercentage" placeholder="Porcentagem de impostos" type="number" id="percentage" value={percentage} onChange={handlePercentageChange} />
 
-        <Button name="Registrar" type="submit">Registrar</Button>
-      </form>
+          <Button name="Registrar" type="submit">Registrar</Button>
+        </form>
+      </Aside>
     </section>
   );
 }

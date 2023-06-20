@@ -82,7 +82,7 @@ export default function Cart({ selectedProducts, setSelectedProducts }) {
   }
 
   return (
-    <aside data-testid="cart" className="Cart">
+    <div data-testid="cart" className="Cart">
       <header>
         <h2>Carrinho</h2>
         <CircleButton>X</CircleButton>
@@ -98,7 +98,7 @@ export default function Cart({ selectedProducts, setSelectedProducts }) {
           />
         ))}
       </ul>
-
+      
       <footer data-testid="cart-footer">
         <Price label="Sub-total">{subTotal}</Price>
         <Price label="Impostos">{taxes}</Price>
@@ -107,6 +107,6 @@ export default function Cart({ selectedProducts, setSelectedProducts }) {
         <br />
         <Button name="Checkout" onClick={handleSaleSubmit}>Finalizar venda</Button>
       </footer>
-    </aside>
+    </div>
   )
 }

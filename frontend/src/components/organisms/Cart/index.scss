@@ -1,11 +1,8 @@
 @import 'styles/variables.scss';
 
 .Cart {
-  background-color: $white;
-  border-radius: 20px;
-  padding: map-get($map: $spacing, $key: lg);
   display: grid;
-  max-height: calc(100vh - 120px);
+  height: 100%;
   grid-template-rows: min-content 1fr min-content;
 
   header {
