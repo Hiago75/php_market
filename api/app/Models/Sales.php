@@ -18,13 +18,17 @@ class Sales
         return $this->db->executeQuery('SELECT * FROM sales');
     }
 
-    public function save(string $id, string $productId, int $quantity, $saleDate)
+    public function save(string $id, $subtotal, $taxes, $total, $saleDate)
     {
-        $query = 'INSERT INTO sales (id, product_id, quantity, sale_date) VALUES (?, ?, ?, ?)';
-        $params = [$id, $productId, $quantity, $saleDate];
+        $query = 'INSERT INTO sales (id, subtotal, taxes, total, sale_date) VALUES (?, ?, ?, ?, ?) RETURNING id';
+        $params = [$id, $subtotal, $taxes, $total, $saleDate];
     
-        $this->db->executeQuery($query, $params);
+        $pdo = $this->db->getPDO();
+        $stmt = $pdo->prepare($query);
+        $stmt->execute($params);
+
+        $newSaleId = $stmt->fetchColumn();
     
-        return 'success';
+        return ['id' => $newSaleId];
     }
 }

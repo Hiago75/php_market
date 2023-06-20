@@ -18,10 +18,11 @@ class SalesService
     return $this->sales->getAll();
   }
 
-  public function save($productId, $quantity, $saleDate)
+  public function save($subtotal, $taxes, $total)
   {
-    $id = HashProvider::generateHash($productId);
+    $saleDate = date('Y-m-d');
+    $id = HashProvider::generateHash(date('Y-m-d H:i:s').$subtotal);
 
-    return $this->sales->save($id, $productId, $quantity, $saleDate);
+    return $this->sales->save($id, $subtotal, $taxes, $total, $saleDate);
   }
 }

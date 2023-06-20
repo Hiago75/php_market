@@ -1,6 +1,7 @@
 <?php
 use App\Models\Sales;
 use App\Services\SalesService;
+use App\Providers\HashProvider;
 use PHPUnit\Framework\TestCase;
 
 class SalesServiceTest extends TestCase
@@ -24,15 +25,18 @@ class SalesServiceTest extends TestCase
     
     public function testSaveCallsModelSaveWithCorrectParameters()
     {
-        $productId = 1;
-        $quantity = 5;
-        $saleDate = '2023-06-16';
+        $saleDate = date('Y-m-d');
+        $subtotal = 80.5;
+        $taxes = 5;
+        $total = 90.5;
+        $id = HashProvider::generateHash(date('Y-m-d H:i:s').$subtotal);
 
         $this->salesModelMock->expects($this->once())
             ->method('save')
+            ->with($id, $subtotal, $taxes, $total, $saleDate)
             ->willReturn('Success');
 
-        $result = $this->salesService->save($productId, $quantity, $saleDate);
+        $result = $this->salesService->save($subtotal, $taxes, $total);
 
         $this->assertEquals('Success', $result);
     }

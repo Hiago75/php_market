@@ -34,14 +34,14 @@ class SalesControllerTest extends TestCase
     public function testPostWithValidDataCallsSaveAndReturnsResult()
     {
         $data = [
-            'product_id' => 1,
-            'quantity' => 5,
-            'sale_date' => '2023-06-16',
+            'subtotal' => 80.5,
+            'taxes' => 5,
+            'total' => 90.5,
         ];
-
+   
         $this->salesServiceMock->expects($this->once())
             ->method('save')
-            ->with($data['product_id'], $data['quantity'], $data['sale_date'])
+            ->with($data['subtotal'], $data['taxes'], $data['total'])
             ->willReturn('Success');
 
         $result = $this->salesController->post($data);

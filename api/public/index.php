@@ -6,6 +6,8 @@ require_once '../vendor/autoload.php';
 
 use App\Providers\DatabaseConnectionProvider;
 
+date_default_timezone_set('America/Sao_Paulo');
+
 $requestUrl = $_SERVER['REQUEST_URI'];
 
 $baseUrl = str_replace('/public', '', $_SERVER['SCRIPT_NAME']);
