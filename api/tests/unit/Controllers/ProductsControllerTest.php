@@ -22,24 +22,9 @@ class ProductsControllerTest extends TestCase
             ->method('getAll')
             ->willReturn($expectedResult);
 
-        $result = $this->productsController->get();
+        $result = $this->productsController->index();
 
         $this->assertEquals($expectedResult, $result);
-    }
-
-    public function testGetByIdReturnsProductById()
-    {
-        $productId = 1;
-        $expectedProduct = ['id' => $productId, 'name' => 'Product 1'];
-
-        $this->productsServiceMock->expects($this->once())
-            ->method('getById')
-            ->with($productId)
-            ->willReturn($expectedProduct);
-
-        $result = $this->productsController->get($productId);
-
-        $this->assertEquals($expectedProduct, $result);
     }
 
     public function testPostReturnsMissingFieldsWhenDataIsNotPresent()

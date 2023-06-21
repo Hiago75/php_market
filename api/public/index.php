@@ -32,7 +32,7 @@ try {
     $response = $router->dispatch();
 
     http_response_code(200);
-    echo json_encode($response, JSON_UNESCAPED_UNICODE);
+    echo json_encode(['data' => $response], JSON_UNESCAPED_UNICODE);
 } catch (\Exception $e) {
     http_response_code(404);
     echo json_encode(['error' => 'Not Found']);

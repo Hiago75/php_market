@@ -17,6 +17,8 @@ class ExceptionHandler
         $statusCode = 500;
         $message = 'Internal Server Error';
 
+        echo $exception;
+
         foreach ($this->exceptionMapping as $exceptionClass => $mapping) {
             if ($exception instanceof $exceptionClass) {
                 $statusCode = $mapping['status'];

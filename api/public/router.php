@@ -2,10 +2,6 @@
 
 chdir(__DIR__);
 
-set_exception_handler([$exceptionHandler, 'handleException']);
-set_error_handler([$exceptionHandler, 'handleError']);
-
-
 $filePath = realpath(ltrim($_SERVER["REQUEST_URI"], '/'));
 if ($filePath && is_dir($filePath)) {
     $indexFiles = ['index.php', 'index.html'];
