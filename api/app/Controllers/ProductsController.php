@@ -13,12 +13,8 @@ class ProductsController
         $this->productsService = $productsService;
     }
 
-    public function get($id = null)
+    public function index()
     {
-        if ($id !== null) {
-            return $this->productsService->getById($id);
-        }
-    
         return $this->productsService->getAll();
     }
 
