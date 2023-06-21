@@ -23,7 +23,8 @@
     transition: all .3s ease;
     margin: 15px 0;
 
-    &:hover {
+    &:hover,
+    &.active {
       background-color: $white;
       color: $light-blue;
     }

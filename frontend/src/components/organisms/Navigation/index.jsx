@@ -5,27 +5,28 @@ import Icon from "components/atoms/Icon";
 import './index.scss';
 
 export default function Navigation() {
+  const links = [
+    { path: "/", icon: "GiShoppingCart", text: "Registrar venda" },
+    { path: "/products", icon: 'GiShoppingBag', text: "Produtos" },
+    { path: "/categories", icon: "GiHighlighter", text: "Categorias" },
+    { path: "/transactions", icon: "AiOutlineUnorderedList", text: "Transações" },
+  ];
+
+  
   return (
     <div className="Navigation">
-      <a href="/">
-        <Icon icon="GiTakeMyMoney" className="Navigation-icon" />
-        Registrar venda
-      </a>
-
-      <a href='/products'>
-        <Icon className="Navigation-icon" />
-        Produtos
-      </a>
-
-      <a href='/categories'>
-        <Icon icon="GiHighlighter" className="Navigation-icon" />
-        Categorias
-      </a>
-
-      <a href="/transactions">
-        <Icon icon="AiOutlineUnorderedList" className="Navigation-icon" />
-        Transações
-      </a>
+      {links.map((link, index) => (
+        <a
+          key={index}
+          href={link.path}
+          className={window.location.pathname === link.path ? "active" : ""}
+        >
+          {link.icon && (
+            <Icon icon={link.icon} className="Navigation-icon" />
+          )}
+          {link.text}
+        </a>
+      ))}
     </div>
   )
 }
