@@ -63,6 +63,7 @@ export default function Cart({ selectedProducts, setSelectedProducts }) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
+        products: selectedProducts,
         subTotal,
         taxes,
         total
