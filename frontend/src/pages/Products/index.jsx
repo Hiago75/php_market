@@ -10,12 +10,15 @@ import Select from "components/molecules/Select";
 import 'styles/container.scss'
 import './index.scss';
 import Toast from "components/molecules/Toast/index";
+import ProductCard from "components/molecules/ProductCard/index";
+import ProductGrid from "components/organisms/ProductGrid/index";
 
 
 export default function Product() {
   const [name, setName] = useState('');
   const [typeId, setTypeId] = useState('');
   const [price, setPrice] = useState('');
+  const [products, setProducts] = useState();
   
   const handleNameChange = (event) => {
     setName(event.target.value);
@@ -28,6 +31,7 @@ export default function Product() {
   const handlePriceChange = (event) => {
     setPrice(event.target.value);
   };
+  
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -56,10 +60,11 @@ export default function Product() {
     setPrice('');
   };
 
-
   const { data, loading } = useFetchData('http://localhost:8080/product-type');
+  const response = useFetchData('http://localhost:8080/products');
 
-  if(loading) {
+
+  if(loading || response.loading) {
     return <>loading</>
   }
 
@@ -67,7 +72,11 @@ export default function Product() {
 
   return (
     <section className="Container">
-      <div>1</div>
+      <ProductGrid>
+        {response.data.data.map((product) => (
+          <ProductCard key={product.name}  product={product} />
+        ))}
+      </ProductGrid>
       
       <Aside>
         <form className="Product-form" onSubmit={handleSubmit}>

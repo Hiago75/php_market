@@ -7,6 +7,9 @@ import Input from 'components/molecules/Input';
 import Button from 'components/atoms/Button';
 
 import './index.scss';
+import useFetchData from 'hooks/useFetchData';
+import Icon from 'components/atoms/Icon/index';
+import { productTypeIconMap } from 'utils/productTypeIconMap';
 
 
 export default function Categories() {
@@ -76,9 +79,24 @@ export default function Categories() {
     }
   };
 
+  const { data, loading } = useFetchData('http://localhost:8080/product-type');
+
+  if(loading){
+    return <loading>....</loading>
+  }
+
   return (
     <section className='Container'>
-      <h2>Register New Type with Taxes</h2>
+      <div>
+      {data.data.map(productTypes => {
+        const icon = productTypeIconMap[productTypes.name]
+
+        return(<div>
+          <Icon icon={icon} />
+          <h2>{productTypes.name}</h2>
+        </div>)
+      })}
+      </div>
       
       <Aside>
         <Toast />
