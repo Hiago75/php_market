@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
+import { toast }  from 'react-toastify';
+
+import Toast from 'components/molecules/Toast/index';
+import Aside from 'components/organisms/Aside/index';
 import Input from 'components/molecules/Input';
 import Button from 'components/atoms/Button';
 
 import './index.scss';
-import Aside from 'components/organisms/Aside/index';
+
 
 export default function Categories() {
   const [name, setName] = useState('');
@@ -22,13 +26,20 @@ export default function Categories() {
 
     // TODO: refactor
     try {
-      const typeResponse = await fetch('http://localhost:8080/product-type', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ name }),
-      });
+      const typeResponse = await toast.promise(
+        fetch('http://localhost:8080/product-type', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ name }),
+        }),
+        {
+          pending: 'Um momento...',
+          success: 'Categoria registrado',
+          error: 'Opa, parece que algo deu errado.'
+        }
+      )
 
       if (!typeResponse.ok) {
         throw new Error('Failed to create type');
@@ -37,13 +48,20 @@ export default function Categories() {
       const newType = await typeResponse.json();
       const typeId = newType.data.id;
 
-      const taxResponse = await fetch('http://localhost:8080/taxes', {
+      const taxResponse = await toast.promise(
+        fetch ('http://localhost:8080/taxes', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ type_id: typeId, percentage }),
-      });
+      }), 
+      {
+        pending: 'Um momento...',
+        success: 'Porcentagem de impostos registrada',
+        error: 'Opa, parece que algo deu errado.'
+      }
+      );
 
       setName('');
       setPercentage('');
@@ -63,6 +81,7 @@ export default function Categories() {
       <h2>Register New Type with Taxes</h2>
       
       <Aside>
+        <Toast />
         <form className='Categories-form' onSubmit={handleSubmit}>
           <Input icon="GiPencil" type="text" placeholder="Nome" id="name" value={name} onChange={handleNameChange} />
           

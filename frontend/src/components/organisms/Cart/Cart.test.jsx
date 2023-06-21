@@ -1,5 +1,4 @@
 import React from "react";
-import ReactDOM from "react-dom/client";
 import { act } from "react-dom/test-utils";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 
@@ -101,7 +100,5 @@ describe("Cart", () => {
     await waitFor(() => {
       expect(fetch).toHaveBeenCalled();
     })
-
-    expect(console.log).toHaveBeenCalledWith('Nova venda criada');
   })
 });

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { toast } from 'react-toastify';
 
 import Button from 'components/atoms/Button';
 import Price from 'components/atoms/Price';
@@ -6,6 +7,7 @@ import CircleButton from 'components/atoms/CircleButton';
 import ProductLine from 'components/molecules/ProductLine';
 
 import './index.scss'
+import Toast from "components/molecules/Toast/index";
 
 export default function Cart({ selectedProducts, setSelectedProducts }) {
   const [subTotal, setSubTotal] = useState(0);
@@ -56,34 +58,38 @@ export default function Cart({ selectedProducts, setSelectedProducts }) {
     setSelectedProducts(updatedProducts);
   };
 
-  const handleSaleSubmit = async (event) => {
-    const response = await fetch('http://localhost:8080/sales', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        products: selectedProducts,
-        subTotal,
-        taxes,
-        total
-      })
-    })
+  const handleSaleSubmit = async () => {
+    const response = await toast.promise(
+      fetch('http://localhost:8080/sales', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          products: selectedProducts,
+          subTotal,
+          taxes,
+          total
+        })
+      }),
+      {
+        pending: 'Um momento...',
+        success: 'Venda registrada.',
+        error: 'Opa, parece que algo deu errado.'
+      }
+    )
 
-    if(!response) {
-      throw new Error('Failed to create sale');
-    }
+    if(!response) return;
 
     setSelectedProducts([])
     setSubTotal(0)
     setTaxes(0)
     setTotal(0)
-
-    console.log('Nova venda criada')
   }
 
   return (
     <div data-testid="cart" className="Cart">
+  
       <header>
         <h2>Carrinho</h2>
         <CircleButton>X</CircleButton>
@@ -108,6 +114,7 @@ export default function Cart({ selectedProducts, setSelectedProducts }) {
         <br />
         <Button name="Checkout" onClick={handleSaleSubmit}>Finalizar venda</Button>
       </footer>
+      <Toast />
     </div>
   )
 }

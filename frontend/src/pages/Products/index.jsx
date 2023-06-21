@@ -1,13 +1,16 @@
 import React, { useState } from "react";
-import useFetchData from 'hooks/useFetchData';
+import { toast } from 'react-toastify';
 
+import useFetchData from 'hooks/useFetchData';
+import Aside from "components/organisms/Aside/index";
 import Button from 'components/atoms/Button';
 import Input from "components/molecules/Input";
 import Select from "components/molecules/Select";
 
 import 'styles/container.scss'
 import './index.scss';
-import Aside from "components/organisms/Aside/index";
+import Toast from "components/molecules/Toast/index";
+
 
 export default function Product() {
   const [name, setName] = useState('');
@@ -29,32 +32,32 @@ export default function Product() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const newProduct = { name, type_id: typeId, price };
-
-    try {
-      const response = await fetch('http://localhost:8080/products', {
+    
+    const response = await toast.promise(
+      fetch('http://localhost:8080/products', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Origin': 'http://localhost:3000',
         },
         body: JSON.stringify(newProduct),
-      });
-
-      if (response.ok) {
-        console.log('Product successfully registered!');
-        setName('');
-        setTypeId('');
-        setPrice('');
-      } else {
-        console.error('Failed to register product');
+      }),
+      {
+        pending: 'Um momento...',
+        success: 'Produto registrado',
+        error: 'Opa, parece que algo deu errado.'
       }
-    } catch (error) {
-      console.error('Error registering product:', error);
-    }
+    )
+
+    if(!response) return;
+
+    setName('');
+    setTypeId('');
+    setPrice('');
   };
 
 
-  const { data, loading, error } = useFetchData('http://localhost:8080/product-type');
+  const { data, loading } = useFetchData('http://localhost:8080/product-type');
 
   if(loading) {
     return <>loading</>
@@ -77,6 +80,7 @@ export default function Product() {
           <Input label="Preço" icon="GiPriceTag" type="number" placeholder="Preço" id="price" value={price} onChange={handlePriceChange} />
           <Button name="Registrar" type="submit">Registrar</Button>
         </form>
+        <Toast />
       </Aside>
     </section>
   )
