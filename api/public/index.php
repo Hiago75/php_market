@@ -27,6 +27,7 @@ foreach ($registrations as $registration) {
 $router = new Router($container);
 
 $router->addRoute('GET', '/products', 'App\Controllers\ProductsController@index');
+$router->addRoute('POST', '/products', 'App\Controllers\ProductsController@create');
 
 try {
     $response = $router->dispatch();
@@ -34,6 +35,7 @@ try {
     http_response_code(200);
     echo json_encode(['data' => $response], JSON_UNESCAPED_UNICODE);
 } catch (\Exception $e) {
+    echo $e;
     http_response_code(404);
     echo json_encode(['error' => 'Not Found']);
 }

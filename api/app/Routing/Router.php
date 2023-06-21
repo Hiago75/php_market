@@ -14,6 +14,11 @@ class Router
         $this->container = $container;
     }
 
+    public function get()
+    {
+        return $this->routes;
+    }
+
     public function addRoute($method, $path, $callback)
     {
         $this->routes[] = [
@@ -40,6 +45,7 @@ class Router
         $params = [];
         foreach ($reflectionParameters as $parameter) {
             $name = $parameter->getName();
+
             if (isset($matches[$name])) {
                 $params[] = $matches[$name];
             } elseif ($parameter->isOptional()) {
@@ -71,9 +77,9 @@ class Router
             if ($route['method'] === $requestMethod && preg_match($route['path'], $requestPath, $matches)) {
                 array_shift($matches);
 
-                if ($route['method'] === 'POST') {
+                if ($route['method'] === 'POST' || $route['method'] === 'PUT') {
                     $body = json_decode(file_get_contents('php://input'), true);
-                    $matches[] = $body;
+                    $matches['data'] = $body;
                 }
 
                 $callback = $route['callback'];
@@ -86,7 +92,9 @@ class Router
 
                 if (is_string($callback) && strpos($callback, '@') !== false) {
                     list($controllerClass, $methodName) = explode('@', $callback);
+
                     $controller = $this->container->get($controllerClass);
+
                     if (method_exists($controller, $methodName)) {
                         return call_user_func_array([$controller, $methodName], $params);
                     }
@@ -99,4 +107,3 @@ class Router
         throw new NotFoundException();
     }
 }
-

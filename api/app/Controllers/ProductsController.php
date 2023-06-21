@@ -18,7 +18,7 @@ class ProductsController
         return $this->productsService->getAll();
     }
 
-    public function post($data)
+    public function create($data)
     {
         $requiredKeys = ['name', 'type_id', 'price'];
         $dataIsPresent = DataFormaterProvider::verifyKeys($data, $requiredKeys);
