@@ -9,7 +9,7 @@ export default function Navigation() {
     <div className="Navigation">
       <a href="/">
         <Icon icon="GiTakeMyMoney" className="Navigation-icon" />
-        Venda
+        Registrar venda
       </a>
 
       <a href='/products'>
@@ -20,6 +20,11 @@ export default function Navigation() {
       <a href='/categories'>
         <Icon icon="GiHighlighter" className="Navigation-icon" />
         Categorias
+      </a>
+
+      <a href="/transactions">
+        <Icon icon="AiOutlineUnorderedList" className="Navigation-icon" />
+        Transações
       </a>
     </div>
   )

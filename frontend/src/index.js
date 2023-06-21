@@ -5,10 +5,12 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Cashier from './pages/Cashier';
 import Products from './pages/Products';
 import Categories from './pages/Categories';
+import Transactions from 'pages/Transactions/index';
 import Navigation from 'components/organisms/Navigation';
 
 import 'styles/global.scss';
 import 'styles/container.scss';
+
 
 const router = createBrowserRouter([
   {
@@ -22,6 +24,10 @@ const router = createBrowserRouter([
   {
     'path': '/categories',
     element: <Categories />
+  },
+  {
+    'path': '/transactions',
+    element: <Transactions />
   }
 ])
 
