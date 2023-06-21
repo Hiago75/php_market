@@ -13,7 +13,7 @@ class TaxesController
     $this->taxesService = $taxesService;
   }
 
-  public function get($id = null)
+  public function index($id = null)
   {
     if ($id !== null) {
       return $this->taxesService->getById($id);
@@ -22,7 +22,7 @@ class TaxesController
   return $this->taxesService->getAll();
   }
 
-  public function post($data)
+  public function create($data)
   {
     $requiredKeys = ['type_id', 'percentage'];
     $dataIsPresent = DataFormaterProvider::verifyKeys($data, $requiredKeys);

@@ -13,12 +13,12 @@ class SalesController
     $this->salesService = $salesService;
   }
 
-  public function get()
+  public function index()
   {
     return $this->salesService->getAll();
   }
 
-  public function post($data)
+  public function create($data)
   {
     $requiredKeys = ['products', 'subTotal', 'taxes', 'total'];
     $dataIsPresent = DataFormaterProvider::verifyKeys($data, $requiredKeys);

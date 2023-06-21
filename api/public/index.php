@@ -29,6 +29,15 @@ $router = new Router($container);
 $router->addRoute('GET', '/products', 'App\Controllers\ProductsController@index');
 $router->addRoute('POST', '/products', 'App\Controllers\ProductsController@create');
 
+$router->addRoute('GET', '/product-type', 'App\Controllers\ProductTypeController@index');
+$router->addRoute('POST', '/product-type', 'App\Controllers\ProductTypeController@create');
+
+$router->addRoute('GET', '/taxes', 'App\Controllers\TaxesController@index');
+$router->addRoute('POST', '/taxes', 'App\Controllers\TaxesController@create');
+
+$router->addRoute('GET', '/sales', 'App\Controllers\SalesController@index');
+$router->addRoute('POST', '/sales', 'App\Controllers\SalesController@create');
+
 try {
     $response = $router->dispatch();
 

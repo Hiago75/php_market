@@ -13,12 +13,12 @@ class ProductTypeController
         $this->productTypeService = $productTypeService;
     }
 
-    public function get()
+    public function index()
     {
         return $this->productTypeService->getAll();
     }
 
-    public function post($data) {
+    public function create($data) {
         $requiredKeys = ['name'];
         $dataIsPresent = DataFormaterProvider::verifyKeys($data, $requiredKeys);
         
