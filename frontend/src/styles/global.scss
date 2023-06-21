@@ -1,12 +1,27 @@
 @import './variables.scss';
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap');
 
-
 * {
   font-family: 'Open Sans', sans-serif;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  scrollbar-width: thin;
+  scrollbar-color: $cadet-blue $darker-white;
+
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $darker-white;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $cadet-blue;
+    border-radius: 9px;
+    border: 3px solid $darker-white;
+  }
 }
 
 html,
