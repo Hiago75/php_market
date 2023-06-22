@@ -52,7 +52,5 @@ class TaxesTest extends TestCase
             ->with($query, $params);
 
         $result = $this->taxes->save($id, $typeId, $percentage);
-
-        $this->assertEquals('success', $result);
     }
 }

@@ -1,7 +1,7 @@
-import React from 'react';
-import Icon from '../../atoms/Icon';
+import React from "react";
+import Icon from "../../atoms/Icon";
 
-import './index.scss';
+import "./index.scss";
 
 export default function Select({ options, value, onChange, icon, label }) {
   return (

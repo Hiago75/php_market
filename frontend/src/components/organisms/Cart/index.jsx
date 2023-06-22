@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { toast } from "react-toastify";
 
 import Button from "components/atoms/Button";
 import Price from "components/atoms/Price";
-import CircleButton from "components/atoms/CircleButton";
 import ProductLine from "components/molecules/ProductLine";
-
-import "./index.scss";
 import Toast from "components/molecules/Toast/index";
 import { makeRequest } from "services/api";
+
+import "./index.scss";
 
 export default function Cart({ selectedProducts, setSelectedProducts }) {
   const [subTotal, setSubTotal] = useState(0);
@@ -59,6 +57,11 @@ export default function Cart({ selectedProducts, setSelectedProducts }) {
     setSelectedProducts(updatedProducts);
   };
 
+  const handleRemoveProduct = (product) => {
+    const updatedProducts = selectedProducts.filter((p) => p !== product);
+    setSelectedProducts(updatedProducts);
+  };
+
   const handleSaleSubmit = async () => {
     const result = await makeRequest(
       "http://localhost:8080/sales",
@@ -84,7 +87,6 @@ export default function Cart({ selectedProducts, setSelectedProducts }) {
     <div data-testid="cart" className="Cart">
       <header>
         <h2>Carrinho</h2>
-        <CircleButton>X</CircleButton>
       </header>
 
       <ul>
@@ -92,6 +94,7 @@ export default function Cart({ selectedProducts, setSelectedProducts }) {
           <ProductLine
             onIncrement={handleIncrementProduct}
             onDecrement={handleDecrementProduct}
+            onRemove={() => handleRemoveProduct(product)}
             key={product.name}
             product={product}
           />

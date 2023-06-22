@@ -42,12 +42,13 @@ class DatabaseConnectionProvider
             $stmt->execute($params);
             return $stmt->fetchAll(\PDO::FETCH_ASSOC);
         } catch (\PDOException $e) {
+            echo $e;
             throw new DatabaseException();
         }
     }
 
     public function checkIfExists(string $table, string $column, $value, $errMessage)
-    {
+    {   
         $query = "SELECT COUNT(*) AS count FROM $table WHERE $column = ?";
         $params = [$value];
 

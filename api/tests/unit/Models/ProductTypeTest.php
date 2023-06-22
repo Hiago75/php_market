@@ -30,7 +30,9 @@ class ProductTypeTest extends TestCase
 
         $this->dbMock->expects($this->once())
             ->method('executeQuery')
-            ->with('SELECT id, name FROM product_types')
+            ->with('SELECT product_types.id, product_types.name, taxes.percentage AS tax_percentage
+                      FROM product_types
+                      JOIN taxes ON product_types.id = taxes.type_id')
             ->willReturn($expectedResult);
 
         $result = $this->productType->getAll();

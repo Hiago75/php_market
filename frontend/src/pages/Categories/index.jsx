@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Toast from "components/molecules/Toast/index";
 import Aside from "components/organisms/Aside/index";
@@ -7,7 +7,6 @@ import Button from "components/atoms/Button";
 import Line from "components/molecules/Line";
 
 import "./index.scss";
-import useFetchData from "hooks/useFetchData";
 import Icon from "components/atoms/Icon/index";
 import { productTypeIconMap } from "utils/productTypeIconMap";
 import { makeRequest } from "services/api";
@@ -17,6 +16,7 @@ import Title from "components/atoms/Title/index";
 export default function Categories() {
   const [name, setName] = useState("");
   const [percentage, setPercentage] = useState("");
+  const [categories, setCategories] = useState([]);
 
   const handleNameChange = (event) => {
     setName(event.target.value);
@@ -24,6 +24,17 @@ export default function Categories() {
 
   const handlePercentageChange = (event) => {
     setPercentage(event.target.value);
+  };
+
+  const fetchCategories = async () => {
+    const response = await makeRequest(
+      "http://localhost:8080/product-type",
+      "GET"
+    );
+
+    if (response) {
+      setCategories(response.data);
+    }
   };
 
   const handleSubmit = async (event) => {
@@ -36,27 +47,26 @@ export default function Categories() {
       "Categoria registrada."
     );
 
-    if (typeResponse?.ok) {
-      const newType = await typeResponse.json();
-      const typeId = newType.data.id;
+    if (typeResponse) {
+      const typeId = typeResponse.data.id;
 
       await makeRequest(
-        "http://localhost:8080/sales",
+        "http://localhost:8080/taxes",
         "POST",
         { type_id: typeId, percentage },
         "Impostos atrelados ao tipo."
       );
+
+      setCategories((curr) => [...curr, { name, tax_percentage: percentage }]);
 
       setName("");
       setPercentage("");
     }
   };
 
-  const { data, loading } = useFetchData("http://localhost:8080/product-type");
-
-  if (loading) {
-    return <div>Loading</div>;
-  }
+  useEffect(() => {
+    fetchCategories();
+  }, []);
 
   return (
     <section className="Container">
@@ -64,21 +74,24 @@ export default function Categories() {
         <Title>Categorias</Title>
 
         <List>
-          {data.data.map((productTypes) => {
-            const icon = productTypeIconMap[productTypes.name];
+          {categories &&
+            categories.map((productTypes) => {
+              const icon = productTypeIconMap[productTypes.name];
 
-            return (
-              <div key={productTypes.id}>
-                <Line>
-                  <div className="Line-icon">
-                    <Icon icon={icon} />
-                    <h2>{productTypes.name}</h2>
-                  </div>
-                  <p>Porcentagem de impostos: 8%</p>
-                </Line>
-              </div>
-            );
-          })}
+              return (
+                <div key={productTypes.id}>
+                  <Line>
+                    <div className="Line-icon">
+                      <Icon icon={icon} />
+                      <h2>{productTypes.name}</h2>
+                    </div>
+                    <p>
+                      Porcentagem de impostos: {productTypes.tax_percentage}%
+                    </p>
+                  </Line>
+                </div>
+              );
+            })}
         </List>
       </div>
 

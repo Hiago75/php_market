@@ -28,6 +28,10 @@ class TaxesController
       throw new BadRequest('Campos obrigatórios ausentes.');
     }
 
+    if(intval($data['percentage']) > 100) {
+      throw new BadRequest('A porcentagem não pode estar acima de 100%');
+    }
+
     return $this->taxesService->save($data['type_id'], $data['percentage']);
   }
 }

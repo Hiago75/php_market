@@ -11,8 +11,6 @@ class ExceptionHandler
         $statusCode = 500;
         $message = 'Internal Server Error';
 
-        echo $exception;
-
         http_response_code($statusCode);
         echo json_encode(['error' => $message]);
         die();

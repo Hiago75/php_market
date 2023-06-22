@@ -15,9 +15,13 @@ class ProductType
 
     public function getAll()
     {
-        try{
-            return $this->db->executeQuery('SELECT id, name FROM product_types');
-        }catch(Exception $e) {
+        try {
+            $query = 'SELECT product_types.id, product_types.name, taxes.percentage AS tax_percentage
+                      FROM product_types
+                      JOIN taxes ON product_types.id = taxes.type_id';
+    
+            return $this->db->executeQuery($query);
+        } catch (PDOException $e) {
             throw new DatabaseException();
         }
     }

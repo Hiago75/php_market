@@ -2,9 +2,9 @@ import React from "react";
 
 import "./index.scss";
 
-export default function Line({ children, className }) {
+export default function Line({ children, className, onClick }) {
   return (
-    <li data-testid="line" className={`Line ${className}`}>
+    <li data-testid="line" onClick={onClick} className={`Line ${className}`}>
       {children}
     </li>
   );

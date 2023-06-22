@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { makeRequest } from "services/api";
 import useFetchData from "hooks/useFetchData";
@@ -19,6 +19,7 @@ export default function Product() {
   const [name, setName] = useState("");
   const [typeId, setTypeId] = useState("");
   const [price, setPrice] = useState("");
+  const [products, setProducts] = useState([]);
 
   const handleNameChange = (event) => {
     setName(event.target.value);
@@ -32,6 +33,14 @@ export default function Product() {
     setPrice(event.target.value);
   };
 
+  const fetchProducts = async () => {
+    const response = await makeRequest("http://localhost:8080/products", "GET");
+
+    if (response) {
+      setProducts(response.data);
+    }
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const newProduct = { name, type_id: typeId, price };
@@ -43,21 +52,26 @@ export default function Product() {
       "Produto registrado."
     );
 
-    if (!response) return;
+    if (response) {
+      setProducts((curr) => [...curr, newProduct]);
+    }
 
     setName("");
     setTypeId("");
     setPrice("");
   };
 
-  const { data, loading } = useFetchData("http://localhost:8080/product-type");
-  const response = useFetchData("http://localhost:8080/products");
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
-  if (loading || response.loading) {
-    return <>loading</>;
+  const { data: productTypes, loading: productTypesLoading } = useFetchData(
+    "http://localhost:8080/product-type"
+  );
+
+  if (productTypesLoading) {
+    return <>Loading...</>;
   }
-
-  const productTypes = data.data;
 
   return (
     <section className="Products Container">
@@ -65,7 +79,7 @@ export default function Product() {
         <Title>Produtos</Title>
         <List>
           <ProductGrid>
-            {response.data.data.map((product) => (
+            {products.map((product) => (
               <ProductCard key={product.name} product={product} />
             ))}
           </ProductGrid>
@@ -85,7 +99,7 @@ export default function Product() {
 
           <div>
             <Select
-              options={productTypes}
+              options={productTypes.data}
               value={typeId}
               onChange={handleTypeChange}
               label="Selecione um tipo"
