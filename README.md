@@ -4,7 +4,7 @@ API:
 
 - Acessar o arquivo de configuração, `config.php`, presente diretamente na pasta `api` substituir os valores com os dados de acesso da sua base de dados.
 - No terminal, acessar o diretório `api/public_html` e rodar o comando `php -S localhost:8080 router.php`.
-- Os testes podem ser rodados usando o comando `./vendor/bin/phpunit` dentro do diretório da API
+- Os testes podem ser rodados usando o comando `./vendor/bin/phpunit` dentro do diretório da API. Os devem ser rodados com o servidor já rodando para que os testes do servidor passem
 
 Front-end:
 
