@@ -42,6 +42,8 @@
   }
 
   &-info {
+    text-align: right;
+
     h3 {
       font-size: 16px;
       font-weight: 400;
@@ -51,6 +53,11 @@
       font-size: 24px;
       font-weight: 600;
     }
+  }
+
+  &-taxes {
+    color: $slat-blue;
+    font-size: 16px !important;
   }
 
   &-commands {

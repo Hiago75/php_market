@@ -41,6 +41,9 @@ export default function ProductLine({
 
         <div className="ProductLine-info">
           <p data-testid="product-line__price">R${product.price}</p>
+          <p data-testid="product-line__price" className="ProductLine-taxes">
+            Impostos: R${(product.price * product.tax_percentage) / 100}
+          </p>
         </div>
       </div>
 

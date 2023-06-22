@@ -13,5 +13,6 @@ Front-end:
 - Os testes podem ser rodados usando o comando `npm run test` ou `yarn test`.
 
 Como foi solicitado, o build foi enviado em conjunto e sendo assim vai ser iniciado diretamente.
+O dump está como `db.sql` na raiz do projeto.
 
 Caso não tenha o PostgresSQL instalado no computador, deixei um docker-compose que usei durante o desenvolvimento. Para usa-lo basta usar o comando `docker-compose up -d`. Ele já possui uma base de dados que vai ser construida em conjunto com o container e que possui alguns dados populando a mesma.
