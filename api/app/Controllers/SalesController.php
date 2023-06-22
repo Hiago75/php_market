@@ -25,7 +25,7 @@ class SalesController
     $dataIsPresent = DataFormaterProvider::verifyKeys($data, $requiredKeys);
     
     if (!$dataIsPresent || count($data['products']) < 1) {
-      throw new BadRequest('Missing required fields');
+      throw new BadRequest('Campos obrigatórios ausentes.');
     }
 
     return $this->salesService->save($data['products'], $data['subTotal'], $data['taxes'], $data['total']);

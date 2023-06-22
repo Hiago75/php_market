@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 use App\Exceptions\DatabaseException;
+use App\Exceptions\BadRequest;
 
 class DatabaseConnectionProvider
 {
@@ -22,7 +23,7 @@ class DatabaseConnectionProvider
             $this->pdo = new \PDO($dsn, DB_USER, DB_PASS);
             $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         } catch (\PDOException $e) {
-            throw new DatabaseException("Error connecting to the database: " . $e->getMessage());
+            throw new DatabaseException("Error connecting to the database");
         }
     }
 
@@ -41,7 +42,20 @@ class DatabaseConnectionProvider
             $stmt->execute($params);
             return $stmt->fetchAll(\PDO::FETCH_ASSOC);
         } catch (\PDOException $e) {
-            throw new DatabaseException("Error executing query: " . $e->getMessage());
+            throw new DatabaseException();
+        }
+    }
+
+    public function checkIfExists(string $table, string $column, $value, $errMessage)
+    {
+        $query = "SELECT COUNT(*) AS count FROM $table WHERE $column = ?";
+        $params = [$value];
+
+        $result = $this->executeQuery($query, $params);
+        $count = $result[0]['count'];
+
+        if ($count > 0) {
+            throw new BadRequest($errMessage);
         }
     }
 }

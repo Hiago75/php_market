@@ -2,7 +2,7 @@
 use PHPUnit\Framework\TestCase;
 
 use App\Providers\HashProvider;
-use App\Exceptions\InvalidArgumentException;
+use App\Exceptions\BadRequest;
 
 class HashProviderTest extends TestCase
 {
@@ -18,8 +18,8 @@ class HashProviderTest extends TestCase
 
     public function testGenerateHashThrowsExceptionWhenDataIsEmpty()
     {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Missing data to generate the hash');
+        $this->expectException(BadRequest::class);
+        $this->expectExceptionMessage('Campos obrigatórios ausentes');
 
         $data = '';
 

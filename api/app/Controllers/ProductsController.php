@@ -23,9 +23,9 @@ class ProductsController
     {
         $requiredKeys = ['name', 'type_id', 'price'];
         $dataIsPresent = DataFormaterProvider::verifyKeys($data, $requiredKeys);
-        
+
         if (!$dataIsPresent) {
-            throw new BadRequest('Missing required fields');
+            throw new BadRequest('Campos obrigatórios ausentes.');
         }
 
         return $this->productsService->save($data['name'], $data["type_id"], $data['price']);

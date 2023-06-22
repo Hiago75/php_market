@@ -13,9 +13,9 @@ export default function useFetchData(url) {
         setData(responseData);
         setLoading(false);
       } catch (error) {
-        console.log(error);
         setError(error);
         setLoading(false);
+        throw new Error(error);
       }
     };
 
@@ -23,4 +23,4 @@ export default function useFetchData(url) {
   }, []);
 
   return { data, loading, error };
-};
+}

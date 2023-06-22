@@ -27,7 +27,7 @@ class SalesControllerTest extends TestCase
     public function testPostWithMissingFieldsReturnsErrorMessage()
     {
         $this->expectException(BadRequest::class);
-        $this->expectExceptionMessage('Missing required fields');
+        $this->expectExceptionMessage('Campos obrigatórios ausentes.');
 
         $data = [];
 

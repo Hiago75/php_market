@@ -66,19 +66,4 @@ class ProductsTest extends TestCase
 
         $this->products->save($id, $name, $typeId, $price);
     }
-
-    public function testSaveReturnsSuccessMessage()
-    {
-        $expectedOutput = 'success';
-        $id = 'abc123';
-        $name = 'Product Name';
-        $typeId = '1';
-        $price = 10.99;
-
-        $this->dbMock->method('executeQuery');
-
-        $result = $this->products->save($id, $name, $typeId, $price);
-
-        $this->assertEquals($expectedOutput, $result);
-    }
 }

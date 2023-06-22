@@ -24,6 +24,8 @@ class ProductType
 
     public function save(string $id, string $name)
     {
+        $this->db->checkIfExists('product_types', 'id', $id, 'Essa categoria já existe');
+
         try{
             $query = 'INSERT INTO product_types (id, name) VALUES (?, ?) RETURNING id, name';
             $params = [$id, $name];

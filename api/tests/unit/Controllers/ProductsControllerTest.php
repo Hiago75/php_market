@@ -33,7 +33,7 @@ class ProductsControllerTest extends TestCase
     public function testPostReturnsMissingFieldsWhenDataIsNotPresent()
     {
         $this->expectException(BadRequest::class);
-        $this->expectExceptionMessage('Missing required fields');
+        $this->expectExceptionMessage('Campos obrigatórios ausentes.');
 
         $data = [];
         $actual = $this->productsController->create($data);
