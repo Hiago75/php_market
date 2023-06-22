@@ -12,6 +12,7 @@ import Toast from "components/molecules/Toast/index";
 import ProductCard from "components/molecules/ProductCard/index";
 import ProductGrid from "components/organisms/ProductGrid/index";
 import { makeRequest } from "services/api";
+import Title from "components/atoms/Atom/index";
 
 export default function Product() {
   const [name, setName] = useState("");
@@ -59,13 +60,16 @@ export default function Product() {
 
   return (
     <section className="Container">
-      <ProductGrid>
-        {response.data.data.map((product) => (
-          <ProductCard key={product.name} product={product} />
-        ))}
-      </ProductGrid>
-
+      <div>
+        <Title>Produtos</Title>
+        <ProductGrid>
+          {response.data.data.map((product) => (
+            <ProductCard key={product.name} product={product} />
+          ))}
+        </ProductGrid>
+      </div>
       <Aside>
+        <h2>Registrar novo produto</h2>
         <form className="Product-form" onSubmit={handleSubmit}>
           <Input
             placeholder="Nome"

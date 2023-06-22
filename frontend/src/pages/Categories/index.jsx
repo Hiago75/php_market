@@ -78,6 +78,7 @@ export default function Categories() {
 
       <Aside>
         <Toast />
+        <h2>Nova categoria</h2>
         <form className="Categories-form" onSubmit={handleSubmit}>
           <Input
             icon="GiPencil"
