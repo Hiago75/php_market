@@ -11,6 +11,8 @@ import useFetchData from "hooks/useFetchData";
 import Icon from "components/atoms/Icon/index";
 import { productTypeIconMap } from "utils/productTypeIconMap";
 import { makeRequest } from "services/api";
+import List from "components/organisms/List/index";
+import Title from "components/atoms/Title/index";
 
 export default function Categories() {
   const [name, setName] = useState("");
@@ -59,21 +61,25 @@ export default function Categories() {
   return (
     <section className="Container">
       <div>
-        {data.data.map((productTypes) => {
-          const icon = productTypeIconMap[productTypes.name];
+        <Title>Categorias</Title>
 
-          return (
-            <div key={productTypes.id}>
-              <Line>
-                <div className="Line-icon">
-                  <Icon icon={icon} />
-                  <h2>{productTypes.name}</h2>
-                </div>
-                <p>Porcentagem de impostos: 8%</p>
-              </Line>
-            </div>
-          );
-        })}
+        <List>
+          {data.data.map((productTypes) => {
+            const icon = productTypeIconMap[productTypes.name];
+
+            return (
+              <div key={productTypes.id}>
+                <Line>
+                  <div className="Line-icon">
+                    <Icon icon={icon} />
+                    <h2>{productTypes.name}</h2>
+                  </div>
+                  <p>Porcentagem de impostos: 8%</p>
+                </Line>
+              </div>
+            );
+          })}
+        </List>
       </div>
 
       <Aside>

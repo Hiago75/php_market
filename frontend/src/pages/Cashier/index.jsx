@@ -9,6 +9,7 @@ import Cart from "components/organisms/Cart";
 import "styles/container.scss";
 import "./index.scss";
 import Aside from "components/organisms/Aside/index";
+import List from "components/organisms/List/index";
 
 export default function Cashier() {
   const currentDate = formatDate(new Date());
@@ -32,9 +33,7 @@ export default function Cashier() {
     }
   };
 
-  const { data, loading, error } = useFetchData(
-    "http://localhost:8080/products"
-  );
+  const { data, loading } = useFetchData("http://localhost:8080/products");
 
   if (loading) {
     return <>loading</>;
@@ -49,15 +48,17 @@ export default function Cashier() {
           <h1>Nova venda</h1>
           <time>{currentDate}</time>
         </header>
-        <ProductGrid>
-          {products.map((product) => (
-            <ProductCard
-              key={product.name}
-              onClick={() => handleProductClick(product)}
-              product={product}
-            />
-          ))}
-        </ProductGrid>
+        <List>
+          <ProductGrid>
+            {products.map((product) => (
+              <ProductCard
+                key={product.name}
+                onClick={() => handleProductClick(product)}
+                product={product}
+              />
+            ))}
+          </ProductGrid>
+        </List>
       </section>
 
       <Aside>

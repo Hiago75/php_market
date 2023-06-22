@@ -1,32 +1,41 @@
 import React from "react";
 
-import Line from 'components/molecules/Line';
+import useFetchData from "hooks/useFetchData";
+import Line from "components/molecules/Line";
 import Icon from "components/atoms/Icon/index";
 import Aside from "components/organisms/Aside/index";
-import useFetchData from "hooks/useFetchData";
+import List from "components/organisms/List/index";
+import Title from "components/atoms/Title/index";
 
 export default function Transactions() {
-  const { data, loading } = useFetchData('http://localhost:8080/sales');
+  const { data, loading } = useFetchData("http://localhost:8080/sales");
 
-  if(loading) return <>Loading...</>
-  const mockProduct = data.data[0]
+  if (loading) return <>Loading...</>;
+  const mockProduct = data.data[0];
 
   return (
     <section className="Container">
-        <div>
-          {data.data.map(sale => {
-              const formatedDate = new Date(sale.sale_date).toLocaleDateString('pt-BR');
+      <div>
+        <Title>Transações</Title>
+        <List>
+          {data.data.map((sale) => {
+            const formatedDate = new Date(sale.sale_date).toLocaleDateString(
+              "pt-BR"
+            );
 
-              return <Line key={sale.id}>
-                <div className='Line-icon'>
+            return (
+              <Line key={sale.id}>
+                <div className="Line-icon">
                   <Icon icon="GiShoppingCart" />
                   <p>R${sale.total}</p>
                 </div>
-                <time>{formatedDate}</time>             
+                <time>{formatedDate}</time>
               </Line>
-            }
-          )}
-        </div>
+            );
+          })}
+        </List>
+      </div>
+
       <Aside>
         <h2>Detalhes</h2>
 
@@ -34,5 +43,6 @@ export default function Transactions() {
         <h2>{mockProduct.taxes}</h2>
         <h2>{mockProduct.total}</h2>
       </Aside>
-    </section>)
+    </section>
+  );
 }

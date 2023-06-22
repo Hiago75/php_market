@@ -1,7 +1,7 @@
 @import './variables.scss';
 
 .Container {
-  height: 100%;
+
   width: 100%;
   border-radius: 30px;
   padding: map-get($spacing, lg);
@@ -10,7 +10,11 @@
   grid-template-rows: .7fr .3fr;
   gap: map-get($map: $spacing, $key: lg);
 
+
+
   @media(min-width: 1440px) {
+    height: calc(100vh - 60px);
+    grid-template-rows: none;
     grid-template-columns: .7fr .3fr;
   }
 }

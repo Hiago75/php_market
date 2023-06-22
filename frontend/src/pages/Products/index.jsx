@@ -1,18 +1,19 @@
 import React, { useState } from "react";
 
+import { makeRequest } from "services/api";
 import useFetchData from "hooks/useFetchData";
 import Aside from "components/organisms/Aside/index";
 import Button from "components/atoms/Button";
 import Input from "components/molecules/Input";
 import Select from "components/molecules/Select";
-
-import "styles/container.scss";
-import "./index.scss";
+import Title from "components/atoms/Title/index";
+import List from "components/organisms/List/index";
 import Toast from "components/molecules/Toast/index";
 import ProductCard from "components/molecules/ProductCard/index";
 import ProductGrid from "components/organisms/ProductGrid/index";
-import { makeRequest } from "services/api";
-import Title from "components/atoms/Atom/index";
+
+import "styles/container.scss";
+import "./index.scss";
 
 export default function Product() {
   const [name, setName] = useState("");
@@ -59,18 +60,20 @@ export default function Product() {
   const productTypes = data.data;
 
   return (
-    <section className="Container">
+    <section className="Products Container">
       <div>
         <Title>Produtos</Title>
-        <ProductGrid>
-          {response.data.data.map((product) => (
-            <ProductCard key={product.name} product={product} />
-          ))}
-        </ProductGrid>
+        <List>
+          <ProductGrid>
+            {response.data.data.map((product) => (
+              <ProductCard key={product.name} product={product} />
+            ))}
+          </ProductGrid>
+        </List>
       </div>
       <Aside>
         <h2>Registrar novo produto</h2>
-        <form className="Product-form" onSubmit={handleSubmit}>
+        <form className="Products-form" onSubmit={handleSubmit}>
           <Input
             placeholder="Nome"
             icon="GiPencil"

@@ -31,12 +31,12 @@ body,
 }
 
 #root {
-  padding: map-get($spacing, lg);
+  padding: 10px;
   padding-top: 0;
   background-color: $dark-blue;
 
   @media(min-width: 1440px) {
-    padding-top: map-get($spacing, lg);
+    padding: map-get($spacing, lg);
     padding-left: 0;
   }
 }
