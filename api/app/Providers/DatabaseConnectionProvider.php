@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Providers;
+use App\Exceptions\DatabaseException;
 
 class DatabaseConnectionProvider
 {
@@ -21,7 +22,7 @@ class DatabaseConnectionProvider
             $this->pdo = new \PDO($dsn, DB_USER, DB_PASS);
             $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         } catch (\PDOException $e) {
-            throw new \Exception("Error connecting to the database: " . $e->getMessage());
+            throw new DatabaseException("Error connecting to the database: " . $e->getMessage());
         }
     }
 
@@ -40,7 +41,7 @@ class DatabaseConnectionProvider
             $stmt->execute($params);
             return $stmt->fetchAll(\PDO::FETCH_ASSOC);
         } catch (\PDOException $e) {
-            throw new \Exception("Error executing query: " . $e->getMessage());
+            throw new DatabaseException("Error executing query: " . $e->getMessage());
         }
     }
 }

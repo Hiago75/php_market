@@ -2,30 +2,16 @@
 
 namespace App\Exceptions;
 
+use App\Exceptions\BadRequest;
+
 class ExceptionHandler
 {
-    private $exceptionMapping = [
-        NotFoundException::class => ['status' => 404, 'message' => 'Not Found'],
-        MethodNotAllowedException::class => ['status' => 405, 'message' => 'Method Not Allowed'],
-        InvalidRequestException::class => ['status' => 400, 'message' => 'Invalid Request'],
-        UnauthorizedException::class => ['status' => 401, 'message' => 'Unauthorized'],
-        DatabaseException::class => ['status' => 500, 'message' => 'Internal Server Error'],
-    ];
-
     public function handleException($exception)
     {
         $statusCode = 500;
         $message = 'Internal Server Error';
 
         echo $exception;
-
-        foreach ($this->exceptionMapping as $exceptionClass => $mapping) {
-            if ($exception instanceof $exceptionClass) {
-                $statusCode = $mapping['status'];
-                $message = $mapping['message'];
-                break;
-            }
-        }
 
         http_response_code($statusCode);
         echo json_encode(['error' => $message]);

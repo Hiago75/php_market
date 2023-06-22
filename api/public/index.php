@@ -44,7 +44,9 @@ try {
     http_response_code(200);
     echo json_encode(['data' => $response], JSON_UNESCAPED_UNICODE);
 } catch (\Exception $e) {
-    echo $e;
-    http_response_code(404);
-    echo json_encode(['error' => 'Not Found']);
+    $statusCode = $e->getCode();
+    $errorMessage = $e->getMessage();
+
+    http_response_code($statusCode);
+    echo json_encode(['error' => $errorMessage]);
 }

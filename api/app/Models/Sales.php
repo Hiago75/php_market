@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Providers\DatabaseConnectionProvider;
 use App\Providers\HashProvider;
+use App\Exceptions\DatabaseException;
 
 class Sales
 {
@@ -16,12 +17,16 @@ class Sales
 
     public function getAll()
     {
-        return $this->db->executeQuery('
+        try{
+            return $this->db->executeQuery('
             SELECT sales.*, sale_items.*, products.*
             FROM sales
             JOIN sale_items ON sales.id = sale_items.sale_id
             JOIN products ON sale_items.product_id = products.id
         ');
+        }catch(Exception $e) {
+            throw new DatabaseException();
+        }
     }
 
     public function save($products, $saleId, $subtotal, $taxes, $total, $saleDate)
@@ -51,7 +56,7 @@ class Sales
             return ['id' => $newSaleId];
         } catch (PDOException $e) {
             $pdo->rollback();
-            throw $e;
+            throw new DatabaseException();
         }
     }        
 }

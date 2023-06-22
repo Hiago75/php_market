@@ -1,8 +1,11 @@
 <?php
+use PHPUnit\Framework\TestCase;
+
 use App\Controllers\TaxesController;
 use App\Services\TaxesService;
 use App\Providers\DataFormaterProvider;
-use PHPUnit\Framework\TestCase;
+use App\Exceptions\BadRequest;
+
 
 class TaxesControllerTest extends TestCase
 {
@@ -23,36 +26,21 @@ class TaxesControllerTest extends TestCase
             ->method('getAll')
             ->willReturn($expectedResult);
 
-        $result = $this->taxesController->get();
+        $result = $this->taxesController->index();
 
         $this->assertEquals($expectedResult, $result);
     }
-
-    public function testGetByIdReturnsProductById()
-    {
-        $taxId = 1;
-        $expectedResult = ['id' => $taxId, 'type_id' => '2', 'percentage' => '12'];
-
-        $this->taxesServiceMock->expects($this->once())
-            ->method('getById')
-            ->with($taxId)
-            ->willReturn($expectedResult);
-
-        $result = $this->taxesController->get($taxId);
-
-        $this->assertEquals($expectedResult, $result);
-    }
-
 
     public function testPostMissingRequiredFieldsReturnsErrorMessage()
     {
+        $this->expectException(BadRequest::class);
+        $this->expectExceptionMessage('Missing required fields');
+
         $data = [
             "type_id" => "1",
         ];
 
-        $result = $this->taxesController->post($data);
-
-        $this->assertEquals('Missing required fields', $result);
+        $result = $this->taxesController->create($data);
     }
 
     public function testPostSavesTaxAndReturnsSuccessMessage()
@@ -67,7 +55,7 @@ class TaxesControllerTest extends TestCase
             ->with(1, 10)
             ->willReturn('Success');
 
-        $result = $this->taxesController->post($data);
+        $result = $this->taxesController->create($data);
 
         $this->assertEquals('Success', $result);
     }

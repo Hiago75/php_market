@@ -40,45 +40,13 @@ class ProductsTest extends TestCase
         $this->dbMock->expects($this->once())
             ->method('executeQuery')
             ->with('SELECT products.*, product_types.name AS type_name, taxes.percentage AS tax_percentage
-            FROM products
-            JOIN product_types ON products.type_id = product_types.id
-            JOIN taxes ON product_types.id = taxes.type_id')
+                FROM products
+                JOIN product_types ON products.type_id = product_types.id
+                JOIN taxes ON product_types.id = taxes.type_id')
             ->willReturn($expectedResult);
 
         $result = $this->products->getAll();
 
-        $this->assertEquals($expectedResult, $result);
-    }
-
-    public function testGetReturnsErrorIfProductIsNotFound()
-    {
-        $this->dbMock->expects($this->once())
-        ->method('executeQuery')
-        ->willReturn([]);
-
-        $this->expectException(\Exception::class);
-        $this->expectExceptionMessage('Product not found');
-        $this->products->getById('123');
-    }
-
-    public function testGetById()
-    {
-        $expectedResult = [
-            [
-                'id' => '1',
-                'name' => 'Smartphone',
-                'type_id' => '1',
-                'price' => '1200.00'
-            ],
-        ];
-
-        $this->dbMock->expects($this->once())
-            ->method('executeQuery')
-            ->with('SELECT * FROM products WHERE id = ?')
-            ->willReturn($expectedResult);
-        
-        $result = $this->products->getById('1');
-        
         $this->assertEquals($expectedResult, $result);
     }
 

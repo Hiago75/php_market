@@ -2,6 +2,7 @@
 namespace App\Models;
 
 use App\Providers\DatabaseConnectionProvider;
+use App\Exceptions\DatabaseException;
 
 class ProductType
 {
@@ -14,20 +15,28 @@ class ProductType
 
     public function getAll()
     {
-        return $this->db->executeQuery('SELECT id, name FROM product_types');
+        try{
+            return $this->db->executeQuery('SELECT id, name FROM product_types');
+        }catch(Exception $e) {
+            throw new DatabaseException();
+        }
     }
 
     public function save(string $id, string $name)
     {
-        $query = 'INSERT INTO product_types (id, name) VALUES (?, ?) RETURNING id, name';
-        $params = [$id, $name];
-     
-        $pdo = $this->db->getPDO();
-        $stmt = $pdo->prepare($query);
-        $stmt->execute($params);
+        try{
+            $query = 'INSERT INTO product_types (id, name) VALUES (?, ?) RETURNING id, name';
+            $params = [$id, $name];
+        
+            $pdo = $this->db->getPDO();
+            $stmt = $pdo->prepare($query);
+            $stmt->execute($params);
 
-        $newItemId = $stmt->fetchColumn();
+            $newItemId = $stmt->fetchColumn();
 
-        return ['id' => $newItemId];
+            return ['id' => $newItemId];
+        }catch(Exception $e) {
+            throw new DatabaseException();
+        }
     }
 }

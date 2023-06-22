@@ -29,25 +29,6 @@ class TaxesServiceTest extends TestCase
         $this->assertEquals($expectedResult, $result);
     }
 
-    public function testGetById()
-    {
-        $expectedResult = [
-            [
-                'id' => '1',
-                'type_id' => '1',
-                'percentage' => '12'
-            ],
-        ];
-
-        $this->taxesModelMock->expects($this->once())
-            ->method('getById')
-            ->willReturn($expectedResult);
-        
-        $result = $this->taxesServiceMock->getById('1');
-
-        $this->assertEquals($expectedResult, $result);
-    }
-
     public function testSaveCallsModelSaveAndReturnsResult()
     {
         $typeId = '1';

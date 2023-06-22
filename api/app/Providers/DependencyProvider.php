@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\Providers\DatabaseConnectionProvider;
+use App\Exceptions\InternalServerError;
+
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
@@ -18,7 +20,7 @@ class DependencyProvider
     public function get($name)
     {
         if (!$this->has($name)) {
-            throw new \Exception("Dependency '$name' not found.");
+            throw new InternalServerError("Dependency '$name' not found.");
         }
 
         if (is_callable($this->dependencies[$name])) {
@@ -38,13 +40,13 @@ class DependencyProvider
     {
         $controllersPath = realpath(__DIR__ . '/../Controllers');
         if (!is_dir($controllersPath)) {
-            throw new \Exception('Controllers directory not found.');
+            throw new InternalServerError('Controllers directory not found.');
         }
     
         $controllerNamespace = 'App\\Controllers\\';
     
         $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($controllersPath));
-        $registrations = []; // Array para armazenar as configurações de registro
+        $registrations = [];
     
         foreach ($files as $file) {
             if ($file->isFile() && $file->getExtension() === 'php') {

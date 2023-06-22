@@ -3,6 +3,7 @@ namespace App\Controllers;
 
 use App\Services\TaxesService;
 use App\Providers\DataFormaterProvider;
+use App\Exceptions\BadRequest;
 
 class TaxesController
 {
@@ -13,13 +14,9 @@ class TaxesController
     $this->taxesService = $taxesService;
   }
 
-  public function index($id = null)
+  public function index()
   {
-    if ($id !== null) {
-      return $this->taxesService->getById($id);
-  }
-
-  return $this->taxesService->getAll();
+    return $this->taxesService->getAll();
   }
 
   public function create($data)
@@ -28,7 +25,7 @@ class TaxesController
     $dataIsPresent = DataFormaterProvider::verifyKeys($data, $requiredKeys);
     
     if (!$dataIsPresent) {
-      return 'Missing required fields';
+      throw new BadRequest('Missing required fields');
     }
 
     return $this->taxesService->save($data['type_id'], $data['percentage']);

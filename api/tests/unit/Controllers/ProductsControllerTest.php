@@ -1,7 +1,10 @@
 <?php
 use PHPUnit\Framework\TestCase;
+
 use App\Controllers\ProductsController;
 use App\Services\ProductsService;
+use App\Exceptions\BadRequest;
+
 
 class ProductsControllerTest extends TestCase
 {
@@ -29,10 +32,11 @@ class ProductsControllerTest extends TestCase
 
     public function testPostReturnsMissingFieldsWhenDataIsNotPresent()
     {
-        $data = [];
+        $this->expectException(BadRequest::class);
+        $this->expectExceptionMessage('Missing required fields');
 
-        $expected = 'Missing required fields';
-        $actual = $this->productsController->post($data);
+        $data = [];
+        $actual = $this->productsController->create($data);
 
         $this->assertEquals($expected, $actual);
     }
@@ -49,6 +53,6 @@ class ProductsControllerTest extends TestCase
             ->method('save')
             ->with($data['name'], $data['type_id'], $data['price']);
 
-        $this->productsController->post($data);
+        $this->productsController->create($data);
     }
 }

@@ -1,7 +1,9 @@
 <?php
+use PHPUnit\Framework\TestCase;
+
 use App\Controllers\SalesController;
 use App\Services\SalesService;
-use PHPUnit\Framework\TestCase;
+use App\Exceptions\BadRequest;
 
 class SalesControllerTest extends TestCase
 {
@@ -19,16 +21,17 @@ class SalesControllerTest extends TestCase
         $this->salesServiceMock->expects($this->once())
             ->method('getAll');
 
-        $this->salesController->get();
+        $this->salesController->index();
     }
 
     public function testPostWithMissingFieldsReturnsErrorMessage()
     {
+        $this->expectException(BadRequest::class);
+        $this->expectExceptionMessage('Missing required fields');
+
         $data = [];
 
-        $result = $this->salesController->post($data);
-
-        $this->assertEquals('Missing required fields', $result);
+        $result = $this->salesController->create($data);
     }
 
     public function testPostWithValidDataCallsSaveAndReturnsResult()
@@ -45,7 +48,7 @@ class SalesControllerTest extends TestCase
             ->with($data["products"], $data['subTotal'], $data['taxes'], $data['total'])
             ->willReturn('Success');
 
-        $result = $this->salesController->post($data);
+        $result = $this->salesController->create($data);
 
         $this->assertEquals('Success', $result);
     }

@@ -1,8 +1,10 @@
 <?php
+use PHPUnit\Framework\TestCase;
+
 use App\Controllers\ProductTypeController;
 use App\Services\ProductTypeService;
 use App\Providers\DataFormaterProvider;
-use PHPUnit\Framework\TestCase;
+use App\Exceptions\BadRequest;
 
 class ProductTypeControllerTest extends TestCase
 {
@@ -23,18 +25,19 @@ class ProductTypeControllerTest extends TestCase
             ->method('getAll')
             ->willReturn($expectedResult);
 
-        $result = $this->controller->get();
+        $result = $this->controller->index();
 
         $this->assertEquals($expectedResult, $result);
     }
 
     public function testPostWithMissingNameFieldReturnsErrorMessage()
     {
+        $this->expectException(BadRequest::class);
+        $this->expectExceptionMessage('Missing required fields');
+
         $data = [];
 
-        $result = $this->controller->post($data);
-
-        $this->assertEquals('Missing required fields', $result);
+        $result = $this->controller->create($data);
     }
 
     public function testPostWithValidDataCallsSaveAndReturnsSuccessMessage()
@@ -46,7 +49,7 @@ class ProductTypeControllerTest extends TestCase
             ->with($data['name'])
             ->willReturn('success');
 
-        $result = $this->controller->post($data);
+        $result = $this->controller->create($data);
 
         $this->assertEquals('success', $result);
     }

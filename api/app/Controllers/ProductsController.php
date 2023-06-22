@@ -3,6 +3,7 @@ namespace App\Controllers;
 
 use App\Services\ProductsService;
 use App\Providers\DataFormaterProvider;
+use App\Exceptions\BadRequest;
 
 class ProductsController
 {
@@ -24,7 +25,7 @@ class ProductsController
         $dataIsPresent = DataFormaterProvider::verifyKeys($data, $requiredKeys);
         
         if (!$dataIsPresent) {
-          return 'Missing required fields';
+            throw new BadRequest('Missing required fields');
         }
 
         return $this->productsService->save($data['name'], $data["type_id"], $data['price']);
