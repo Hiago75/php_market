@@ -1,4 +1,5 @@
 Para fazer a inicialização do projeto temos passos individuais para cada parte.
+A API **precisa** ser iniciada antes do Front-end.
 
 API:
 
