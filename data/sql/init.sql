@@ -39,29 +39,34 @@ CREATE TABLE IF NOT EXISTS sale_items (
 
 \c market;
 
-INSERT INTO product_types (id, name)
-VALUES
+INSERT INTO product_types (id, name) VALUES
   ('1', 'Eletrônicos'),
   ('2', 'Roupas'),
   ('3', 'Alimentos');
 
-INSERT INTO products (id, name, type_id, price)
-VALUES
-  ('1001', 'Smartphone', '1', 1200.00),
-  ('1002', 'TV LED', '1', 1500.00),
-  ('2001', 'Camiseta', '2', 29.90),
-  ('2002', 'Calça Jeans', '2', 79.90),
-  ('3001', 'Arroz', '3', 5.50),
-  ('3002', 'Feijão', '3', 4.80);
+INSERT INTO products (id, name, type_id, price) VALUES
+  ('1', 'Smartphone', '1', 1500.00),
+  ('2', 'Notebook', '1', 3000.00),
+  ('3', 'Camiseta', '2', 50.00),
+  ('4', 'Calça', '2', 80.00),
+  ('5', 'Arroz', '3', 5.00);
 
-INSERT INTO taxes (id, type_id, percentage)
-VALUES
-  ('TAX1', '1', 18.00),
-  ('TAX2', '2', 12.00),
-  ('TAX3', '3', 7.00);
+INSERT INTO taxes (id, type_id, percentage) VALUES
+  ('1', '1', 10.00),
+  ('2', '2', 5.00),
+  ('3', '3', 0.00);
 
-INSERT INTO sales (id, product_id, quantity, sale_date)
-VALUES
-  ('SALE1', '1001', 2, '2023-06-15'),
-  ('SALE2', '2002', 1, '2023-06-14'),
-  ('SALE3', '3001', 5, '2023-06-13');
+INSERT INTO sales (id, subtotal, taxes, total, sale_date) VALUES
+  ('1', 2000.00, 200.00, 2200.00, '2022-01-01'),
+  ('2', 130.00, 6.50, 136.50, '2022-02-15'),
+  ('3', 150.00, 0.00, 150.00, '2022-03-10'),
+  ('4', 250.00, 12.50, 262.50, '2022-04-05'),
+  ('5', 100.00, 5.00, 105.00, '2022-05-20');
+
+INSERT INTO sale_items (id, sale_id, product_id, quantity) VALUES
+  ('1', '1', '1', 2),
+  ('2', '1', '3', 4),
+  ('3', '2', '5', 10),
+  ('4', '3', '2', 1),
+  ('5', '4', '4', 3),
+  ('6', '5', '1', 1);
