@@ -1,16 +1,60 @@
 @import 'styles/variables.scss';
 
 .Navigation {
-  writing-mode: vertical-lr;
-  text-orientation: mixed;
+  position: fixed;
+  width: 100vw;
+  height: 60px;
+  left: 0;
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: $light-blue;
-  border-top-right-radius: 30px;
-  border-bottom-right-radius: 30px;
-  padding: 30px 15px;
+  top: 0;
+  gap: 20px;
+  margin-bottom: 20px;
+  transition: .3s ease;
+
+  @media(min-width: 900px) {
+    position: initial;
+    width: auto;
+    height: auto;
+    border-bottom-right-radius: 30px;
+    border-bottom-left-radius: 30px;
+    flex-direction: row;
+  }
+
+  @media(min-width: 1440px) {
+    writing-mode: vertical-lr;
+    text-orientation: mixed;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+  }
+
+
+  &.active {
+    height: 100%;
+    bottom: 0;
+    padding: 30px 15px;
+
+    a {
+      display: flex;
+    }
+  }
+
+  &-button {
+    fill: $white;
+
+    @media(min-width: 900px) {
+      display: none;
+    }
+  }
 
   &-icon {
-    transform: rotate(90deg);
-    margin-bottom: 15px;
+    @media(min-width: 1440px) {
+      transform: rotate(90deg);
+      margin-bottom: 15px;
+    }
   }
 
   a {
@@ -18,10 +62,20 @@
     text-decoration: none;
     font-size: 20px;
     display: inline-block;
-    padding: 20px;
+    padding: 10px 20px;
     border-radius: 20px;
     transition: all .3s ease;
-    margin: 15px 0;
+    display: none;
+    align-items: center;
+    gap: 10px;
+
+    @media(min-width: 900px) {
+      display: flex;
+    }
+
+    @media(min-width: 1440px) {
+      display: block;
+    }
 
     &:hover,
     &.active {

@@ -2,12 +2,12 @@ import * as giIcons from "react-icons/gi";
 import * as aiIcons from "react-icons/ai";
 import { GiShoppingBag } from "react-icons/gi";
 
-export default function Icon({ icon, className }) {
+export default function Icon({ icon, className, onClick }) {
   const getIcon = (iconName) => {
     const iconsMap = new Map();
     iconsMap.set("Gi", giIcons);
-    iconsMap.set('Ai', aiIcons);
-    if(!iconName) return;
+    iconsMap.set("Ai", aiIcons);
+    if (!iconName) return;
 
     return iconsMap.get(iconName.substring(0, 2));
   };
@@ -15,5 +15,5 @@ export default function Icon({ icon, className }) {
   const icons = getIcon(icon);
   const TheIcon = icons ? icons[icon] : GiShoppingBag;
 
-  return <TheIcon data-testid="icon" className={className} />;
+  return <TheIcon onClick={onClick} data-testid="icon" className={className} />;
 }
