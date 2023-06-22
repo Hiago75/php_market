@@ -9,7 +9,7 @@ API:
 Front-end:
 
 - No terminal, acessar o diretório `frontend` e rodar o comando `npm install` (ou `yarn`).
-- No mesmo diretório, rodar o comando `npm run start` ou `yarn start` caso esteja usando o yarn.
+- No mesmo diretório, rodar o comando `npx serve -s build`.
 - Os testes podem ser rodados usando o comando `npm run test` ou `yarn test`.
 
 Como foi solicitado, o build foi enviado em conjunto e sendo assim vai ser iniciado diretamente.
