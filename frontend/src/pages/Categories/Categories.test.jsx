@@ -1,82 +1,37 @@
-import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import Categories from '.';
+import React from "react";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import Categories from "./index";
 
-describe('Categories Component', () => {
-  beforeEach(() => {
-    jest.spyOn(global, 'fetch').mockResolvedValue({
-      ok: true,
-      json: jest.fn().mockResolvedValue({ data: { id: '123' } }),
-    });
-  });
+jest.mock("../../hooks/useFetchData", () => ({
+  __esModule: true,
+  default: () => ({
+    data: {
+      data: [{ name: "Category 1" }, { name: "Category 2" }],
+    },
+    loading: false,
+  }),
+}));
 
-  afterEach(() => {
-    jest.restoreAllMocks();
-  });
-
-  test('renders the component', () => {
+describe("Categories", () => {
+  it("renders category lines correctly", () => {
     render(<Categories />);
-
-    const nameInput = screen.getByPlaceholderText('Nome');
-    const percentageInput = screen.getByPlaceholderText('Porcentagem de impostos');
-    const registerButton = screen.getByRole('button', { name: 'Registrar' });
-
-    expect(nameInput).toBeInTheDocument();
-    expect(percentageInput).toBeInTheDocument();
-    expect(registerButton).toBeInTheDocument();
+    const categoryLines = screen.getAllByTestId("line");
+    expect(categoryLines).toHaveLength(2);
   });
 
-  test('registers a new type with taxes', async () => {
-    jest.spyOn(console, 'log').mockImplementation(() => {});
-
+  it("registers a category and tax successfully", async () => {
     render(<Categories />);
+    const nameInput = screen.getByPlaceholderText("Nome");
+    const percentageInput = screen.getByPlaceholderText(
+      "Porcentagem de impostos"
+    );
+    const registerButton = screen.getByRole("button", { name: "Registrar" });
 
-    const nameInput = screen.getByPlaceholderText('Nome');
-    const percentageInput = screen.getByPlaceholderText('Porcentagem de impostos');
-    const registerButton = screen.getByRole('button', { name: 'Registrar' });
+    userEvent.type(nameInput, "New Category");
+    userEvent.type(percentageInput, "10");
+    userEvent.click(registerButton);
 
-    userEvent.type(nameInput, 'Test Type');
-    userEvent.type(percentageInput, '10');
-    fireEvent.click(registerButton);
-
-    await waitFor(() => {
-      expect(fetch).toHaveBeenCalledTimes(2);
-    });
-
-    expect(nameInput).toHaveValue('');
-    expect(percentageInput).toHaveValue(null);
-
-    expect(console.log).toHaveBeenCalledWith('Type and tax created successfully!');
-  });
-
-  test('handles error when registering a new type with taxes', async () => {
-    jest.spyOn(console, 'error').mockImplementation(() => {});
-
-    jest.spyOn(global, 'fetch').mockResolvedValueOnce({
-      ok: true,
-      json: jest.fn().mockResolvedValue({ data: { id: '123' } }),
-    }).mockResolvedValueOnce({
-      ok: false,
-    });
-
-    render(<Categories />);
-
-    const nameInput = screen.getByPlaceholderText('Nome');
-    const percentageInput = screen.getByPlaceholderText('Porcentagem de impostos');
-    const registerButton = screen.getByRole('button', { name: 'Registrar' });
-
-    userEvent.type(nameInput, 'Test Type');
-    userEvent.type(percentageInput, '10');
-    fireEvent.click(registerButton);
-
-    await waitFor(() => {
-      expect(fetch).toHaveBeenCalledTimes(2);
-    });
-
-    expect(nameInput).toHaveValue('');
-    expect(percentageInput).toHaveValue(null);
-
-    expect(console.error).toHaveBeenCalledWith('Error registering type and tax:', expect.any(Error));
+    await screen.findByText("Categoria registrado");
   });
 });

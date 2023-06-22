@@ -1,0 +1,23 @@
+@import 'styles/variables.scss';
+
+.Line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: $bottom-shadow;
+  padding: 20px;
+  margin: 0 15px 30px 15px;
+  background-color: $white;
+  border-radius: 30px;
+  transition: background .2s ease;
+
+  &:hover {
+    background-color: $dark-white;
+  }
+
+  &-icon {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+}
